@@ -13,8 +13,11 @@ class Transaction:
         self.id = Transaction.id
         Transaction.id += 1
 
+    def __eq__(self, other):
+        return self.id == other.id
+
     def __str__(self):
         return "transaction %s" % (self.id)
 
     def __repr__(self):
-        return "transaction %s" % (self.id)
+        return "Transaction(%s, %s)" % (self.senderId, self.recipId)
