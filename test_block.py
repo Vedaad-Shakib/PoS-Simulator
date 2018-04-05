@@ -6,6 +6,9 @@ import transaction
 import random
 
 def test_blockEquals():
+    transaction.Transaction.id = 0
+    block.Block.id = 0
+    
     t = [transaction.Transaction(i, i+1) for i in range(10)]
 
     a = block.Block(t[:3])
@@ -16,5 +19,3 @@ def test_blockEquals():
     assert a != c
     assert b != c
 
-if __name__ == "__main__":
-    blockTestEquals()

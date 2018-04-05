@@ -7,7 +7,7 @@ import transaction
 import random
 
 class Player:
-    nTransactions = 5 # number of transactions in a block
+    nTransactions = 3 # number of transactions in a block
     id = 0
     
     def __init__(self, stake):
@@ -20,13 +20,14 @@ class Player:
 
     def makeTransaction(self):
         """Returns a random transaction"""
-        
-        return transaction.Transaction(self.id, 1)
+
+        if self.id < 3:
+            return transaction.Transaction(self.id, 1)
 
     def proposeBlock(self, txs):
         """Proposes a Block consisting of multiple random transactions"""
         
-        pickedTx = txs[:self.nTransactions]
+        pickedTx = random.sample(txs, self.nTransactions)
 
         return block.Block(pickedTx)
 
@@ -34,9 +35,7 @@ class Player:
     def validate(self, uBlock):
         """Validates a block"""
 
-        if random.random() < 0.3:
-            return uBlock
-        return block.Block([])
+        return uBlock
 
     def __str__(self):
         return "player %s" % (self.id)

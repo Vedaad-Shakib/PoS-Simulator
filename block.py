@@ -15,6 +15,9 @@ class Block:
 
     def __eq__(self, other):
         """Equality for Block objects is defined as having the same transactions"""
+
+        if other == None:
+            return False
         
         selfIds = [i.id for i in self.txs]
         otherIds = [i.id for i in other.txs]
