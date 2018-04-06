@@ -36,7 +36,7 @@ class Player:
         self.blockchain = None  # the current state of the player's blockchain
         self.mempool    = set() # the current list of txs the player knows about
         self.seenTxs    = set() # set of seen txs
-        self.seenBlocks = set() # set of seen blocks
+        self.seenBlocks = {}    # map of seen blocks to nValidators
 
         self.role = self.ROLES.NONE
 
@@ -77,7 +77,8 @@ class Player:
                 self.seenTxs.add(message)
 
             if type(message) == block.Block:
-                if message in self.seenBlocks:
+                # if block has been seen and not updated since seen
+                if message in self.seenBlocks and self.seenBlocks[message] == len(message.validators):
                     continue
                 
                 # if validator, sign block
@@ -92,14 +93,15 @@ class Player:
                     fBlock.next = self.blockchain
                     self.blockchain = fBlock
 
-                    # stop processing block when added to blockchain
-                    self.seenBlocks.add(message)
+
 
                     # remove txs from local mempool
                     for tx in fBlock.txs:
                         if tx in self.mempool:
                             self.mempool.remove(tx)
                     # optimization: if common blockchain among all players, add to global blockchain to save mem
+                    
+                self.seenBlocks[message] = len(message.validators)
 
             # add to seen messages and outbound for propagation via gossip protocol
             self.outbound.append([message, timestamp])
@@ -108,7 +110,7 @@ class Player:
         # if proposer and at the start of round, propose block
         if heartbeat % solver.Solver.N_HEARTBEATS_IN_ROUND == 0 and self.role == self.ROLES.PROPOSER:
             pBlock = self.proposeBlock()
-            self.seenBlocks.add(pBlock)
+            self.seenBlocks[pBlock] = 0
             self.outbound.append([pBlock, heartbeat])
                 
         # make transaction with probability p
