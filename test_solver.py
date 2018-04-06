@@ -29,8 +29,6 @@ def test_chooseValidators():
 
     expected = [nRounds*s.nValidators*i for i in s.calcPercentStake()]
 
-    print(expected)
-
     error = 0.1
 
     for i, j in zip(count[1:], expected[1:]):

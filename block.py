@@ -13,6 +13,15 @@ class Block:
         self.next = next
         self.txs = txs
 
+        self.validators = [] # list of validators signing the block
+        self.nValidators = 0 
+
+    def signBlock(self, playerId):
+        """Adds playerId of validator to list of validators"""
+        
+        self.validators.append(playerId)
+        self.nValidators += 1
+
     def __eq__(self, other):
         """Equality for Block objects is defined as having the same transactions"""
 

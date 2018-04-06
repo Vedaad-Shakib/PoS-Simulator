@@ -14,10 +14,17 @@ class Transaction:
         Transaction.id += 1
 
     def __eq__(self, other):
+        """Define equality for Transaction objects"""
+        
         return self.id == other.id
 
     def __str__(self):
         return "transaction %s" % (self.id)
 
     def __repr__(self):
-        return "Transaction(%s, %s)" % (self.senderId, self.recipId)
+        return "transaction %s" % (self.id)
+
+    def __hash__(self):
+        """Define hash to make Transaction hashable"""
+        
+        return self.id
