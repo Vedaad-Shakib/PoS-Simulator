@@ -4,23 +4,19 @@
 class Block:
     id = 0
     
-    def __init__(self, txs, next=None):
+    def __init__(self, txs, next=None, id=-1):
         """Creates a new Block object given a list of transactions txs"""
 
-        self.id = Block.id
-        Block.id += 1
+        if id == -1:
+            self.id = Block.id
+            Block.id += 1
+        else:
+            self.id = id
         
-        self.next = next
-        self.txs = txs
+        self.next = next # next block in blockchain
+        self.txs = txs   # list of transactions
 
-        self.validators = [] # list of validators signing the block
-        self.nValidators = 0 
-
-    def signBlock(self, playerId):
-        """Adds playerId of validator to list of validators"""
-        
-        self.validators.append(playerId)
-        self.nValidators += 1
+        self.validators = set() # set of validators signing the block
 
     def __eq__(self, other):
         """Equality for Block objects is defined as having the same transactions"""
@@ -33,14 +29,21 @@ class Block:
 
         return set(selfIds) == set(otherIds)
 
+    def __hash__(self):
+        """Hash for reasonz !"""
+
+        return self.id
+
     def __str__(self):
         if self.next == None:
-            return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])
+            return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])+\
+                   "validators: %s"%(list(self.validators))
         return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])+"\n"+str(self.next)        
 
     def __repr__(self):
         if self.next == None:
-            return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])
+            return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])+\
+                   "validators: %s"%(list(self.validators))
         return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])+"\n"+repr(self.next)
 
 

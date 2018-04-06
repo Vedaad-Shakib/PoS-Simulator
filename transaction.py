@@ -15,6 +15,9 @@ class Transaction:
 
     def __eq__(self, other):
         """Define equality for Transaction objects"""
+
+        if other == None:
+            return False
         
         return self.id == other.id
 
