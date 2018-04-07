@@ -35,16 +35,15 @@ class Block:
         return self.id
 
     def __str__(self):
+        """Str representation: block n: transaction x_i; validators: p_i
+                               str(block n-1)"""
         if self.next == None:
             return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])+\
-                   "validators: %s"%(list(self.validators))
-        return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])+"\n"+str(self.next)        
+                   "; validators: %s"%(list(self.validators))
+        return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])+"; validators: %s \n"%(list(self.validators))+str(self.next)        
 
     def __repr__(self):
-        if self.next == None:
-            return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])+\
-                   "validators: %s"%(list(self.validators))
-        return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])+"\n"+repr(self.next)
+        return self.__str__()
 
 
 

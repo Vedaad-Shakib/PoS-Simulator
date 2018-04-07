@@ -25,7 +25,7 @@ class Transaction:
         return "transaction %s" % (self.id)
 
     def __repr__(self):
-        return "transaction %s" % (self.id)
+        return self.__str__()
 
     def __hash__(self):
         """Define hash to make Transaction hashable"""

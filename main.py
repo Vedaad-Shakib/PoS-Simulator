@@ -10,15 +10,14 @@ import math
 import random
 import statistics
 
-players = [player.Player(1) for i in range(5)]
-solver = solver.Solver(players, 41)
+players = [player.Player(1) for i in range(100)]
+solver = solver.Solver(players, 40)
 
 """for i in solver.players:
     print(i, ":", i.connections)"""
         
 solver.simulate()
 
-print("\n"*4)
-for i in solver.players:
-    print(i, i.blockchain)
+print(solver.players[0])
+print(solver.players[0].blockchain)
 

@@ -10,11 +10,11 @@ import random
 import statistics
 
 class Solver:
-    N_VALIDATORS           = 3    # number of validators
+    N_VALIDATORS           = 5    # number of validators
     N_PROPOSERS            = 1    # number of proposers
-    N_CONNECTIONS          = 2    # number of connections for each players
+    N_CONNECTIONS          = 8    # number of connections for each players
                                   # TODO: make gaussian RV centered around 4
-    N_HEARTBEATS_IN_ROUND  = 20    # number of heartbeats in a round (proposal, validation, finalization)
+    N_HEARTBEATS_IN_ROUND  = 5    # number of heartbeats in a round (proposal, validation, finalization)
     EPS                    = 1e-6 # epsilon for floating point comparisons
     
     def __init__(self, players, nRounds):
@@ -82,16 +82,16 @@ class Solver:
     def nextRound(self, heartbeat):
         """Simulates the next round"""
 
-        print("heartbeat:", heartbeat)
+        #print("heartbeat:", heartbeat)
         t="\t"
         
         # if start of round, reset validator, proposer set
         if heartbeat % Solver.N_HEARTBEATS_IN_ROUND == 0:
             self.valSet  = self.chooseValidators() # choose validator set
             self.propSet = self.chooseProposers()  # choose proposer set
-            print(t, "assign new valSet:", self.valSet)
-            print(t, "assign new propSet:", self.propSet)
-            print()
+            #print(t, "assign new valSet:", self.valSet)
+            #print(t, "assign new propSet:", self.propSet)
+            #print()
         
         for i in self.players:
             i.action(heartbeat)

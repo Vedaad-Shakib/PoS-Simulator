@@ -33,18 +33,19 @@ class Player:
         self.inbound     = [] # inbound messages from other players in the network at heartbeat r
         self.outbound    = [] # outbound messages to other players in the network at heartbeat r
 
-        self.blockchain = None  # the current state of the player's blockchain
-        self.mempool    = set() # the current list of txs the player knows about
-        self.seenTxs    = set() # set of seen txs
-        self.seenBlocks = {}    # map of seen blocks to nValidators
+        self.blockchain      = None  # the current state of the player's blockchain
+        self.mempool         = set() # the current list of txs the player knows about
+        self.seenTxs         = set() # set of seen txs
+        self.seenBlocks      = {}    # map of seen blocks to nValidators
+        self.committedBlocks = set() # set of blocks already added to blockchain (prevent duplicates)
 
         self.role = self.ROLES.NONE
 
     def action(self, heartbeat):
         """Executes the player's actions for heartbeat r"""
 
-        t="\t"
-        print(t, self, ":")
+        #t="\t"
+        #print(t, self, ":")
         
         # if start of round, reset node role
         if heartbeat % solver.Solver.N_HEARTBEATS_IN_ROUND == 0:
@@ -55,11 +56,11 @@ class Player:
             else:
                 self.role = self.ROLES.NONE
 
-            print(t, "role reassigned:", self.role)
+            #print(t, "role reassigned:", self.role)
 
-        print(t, "mempool:", self.mempool)
-        print(t, "inbound:", self.inbound)
-        print(t, "blockchain:", self.blockchain)
+        #print(t, "mempool:", self.mempool)
+        #print(t, "inbound:", self.inbound)
+        #print(t, "blockchain:", self.blockchain)
 
         # process inbound messages
         for message, timestamp in self.inbound:
@@ -87,13 +88,13 @@ class Player:
                         message.validators.add(self.id)
                         
                 # if block has more than 2/3 validator signatures, add to local blockchain
-                if len(message.validators) >= 2*solver.Solver.N_VALIDATORS/3:
+                if len(message.validators) >= 2*solver.Solver.N_VALIDATORS/3 and message not in self.committedBlocks:
                     fBlock = block.Block(message.txs, next=message.next, id=message.id) # create copy of block
                     fBlock.validators = message.validators.copy() # copy validators
                     fBlock.next = self.blockchain
                     self.blockchain = fBlock
 
-
+                    self.committedBlocks.add(message)
 
                     # remove txs from local mempool
                     for tx in fBlock.txs:
@@ -119,10 +120,10 @@ class Player:
             self.outbound.append([tx, heartbeat])
             self.mempool.add(tx)
 
-        print(t, "mempool:", self.mempool)
-        print(t, "outbound:", self.outbound)
-        print(t, "blockchain:", self.blockchain)
-        print()
+        #print(t, "mempool:", self.mempool)
+        #print(t, "outbound:", self.outbound)
+        #print(t, "blockchain:", self.blockchain)
+        #print()
         
         self.sendOutbound()
 
