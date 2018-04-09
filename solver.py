@@ -10,22 +10,20 @@ import random
 import statistics
 
 class Solver:
-    N_VALIDATORS           = 5    # number of validators
-    N_PROPOSERS            = 1    # number of proposers
-    N_CONNECTIONS          = 8    # number of connections for each players
-                                  # TODO: make gaussian RV centered around 4
-    N_HEARTBEATS_IN_ROUND  = 5    # number of heartbeats in a round (proposal, validation, finalization)
-    EPS                    = 1e-6 # epsilon for floating point comparisons
+    EPS = 1e-6 # epsilon for floating point comparisons
     
-    def __init__(self, players, nRounds):
+    def __init__(self, opts):
         """Initiates the solver class with the list of players and number of rounds"""
-        
-        self.players   = players # list of nodes in the system
-        self.nRounds   = nRounds # number of "rounds" the system is simulated for
-        self.heartbeat = 0       # the heartbeat, or clock, of the system
+
+        self.players = []                                                 # the list of nodes in the system
+        for nPlayers, stake in opts["PLAYERS"]:
+            self.players.extend([player.Player(stake) for i in range(nPlayers)])
+            
+        self.nHeartbeats = opts["N_ROUNDS"]*Solver.N_HEARTBEATS_IN_ROUND # number of total heartbeats
+        self.heartbeat   = 0                                              # the heartbeat, or clock, of the system
 
         # add pointer to solver to players
-        for i in players:
+        for i in self.players:
             i.solver = self
             
         self.connectNetwork()
@@ -128,7 +126,7 @@ class Solver:
     def simulate(self):
         """Simulate the system"""
         
-        for i in range(self.nRounds):
+        for i in range(self.nHeartbeats):
             self.nextRound(i)
 
     def calcPercentStake(self):

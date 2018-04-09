@@ -9,10 +9,6 @@ import random
 import numpy as np
 
 class Player:
-    N_TRANSACTIONS = 3    # number of transactions included in a block
-    P_TRANSACTIONS = 0.1  # probability of making a transaction at heartbeat r
-    MEAN_PROP_TIME = 0.1    # mean propagation time
-
     id = 0                # player id
 
     # defines node state constants (none, validator, proposer)
