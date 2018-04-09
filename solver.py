@@ -22,6 +22,8 @@ class Solver:
         self.nHeartbeats = opts["N_ROUNDS"]*Solver.N_HEARTBEATS_IN_ROUND # number of total heartbeats
         self.heartbeat   = 0                                              # the heartbeat, or clock, of the system
 
+        self.blockchain = None # common blockchain among all players
+
         # add pointer to solver to players
         for i in self.players:
             i.solver = self
@@ -53,6 +55,10 @@ class Solver:
             startCoins = endCoins
 
         proposers = [i.id for i in proposers]
+
+        # prevent player from being chosen twice
+        if len(proposers) != len(set(proposers)):
+            proposers = self.chooseProposers()
         
         return proposers
 
@@ -74,8 +80,18 @@ class Solver:
             startCoins = endCoins
 
         validators = [i.id for i in validators]
+
+        # prevent player from being chosen twice
+        if len(validators) != len(set(validators)):
+            validators = self.chooseValidators()
         
         return validators
+
+    def payout(self, vset, proposer):
+        for i in vset:
+            i.stake += 1
+
+        proposer.stake += 1
 
     def nextRound(self, heartbeat):
         """Simulates the next round"""
@@ -83,51 +99,58 @@ class Solver:
         #print("heartbeat:", heartbeat)
         t="\t"
         
-        # if start of round, reset validator, proposer set
+        # if start of round, reset validator, proposer set & update common blockchain
         if heartbeat % Solver.N_HEARTBEATS_IN_ROUND == 0:
             self.valSet  = self.chooseValidators() # choose validator set
             self.propSet = self.chooseProposers()  # choose proposer set
             #print(t, "assign new valSet:", self.valSet)
             #print(t, "assign new propSet:", self.propSet)
             #print()
+
+            # update common blockchain among players
+            currBlock = self.players[0].blockchain
+            vset = set() # aggregate validator set
+            same = True
+            for i in self.players:
+                if i.blockchain: vset = vset.union(i.blockchain.validators)
+                if currBlock != i.blockchain:
+                    same = False
+                    break
+
+            if same and currBlock != None:
+                currBlock = block.Block(currBlock.txs, id=currBlock.id, proposer=currBlock.proposer)
+                currBlock.validators = vset
+                currBlock.next = self.blockchain
+                self.blockchain = currBlock
+
+                self.payout(vset, self.blockchain.proposer)
         
         for i in self.players:
             i.action(heartbeat)
-        
-        """# collect transactions from all the players
-        for i in self.players:
-            tx = i.makeTransaction()
-            if tx:
-                self.txs.append(i.makeTransaction())
-
-        # choose proposer
-        proposer = random.choice(self.players)
-        proposedBlock = proposer.proposeBlock(self.txs)
-        
-        # choose validator
-        validators = self.chooseValidators()
-        votes = [i.validate(proposedBlock) for i in validators]
-
-        winningBlock = max(votes, key=votes.count) # O(n^2), could be optimized
-
-        # if validators chose the winning block, award 1 token
-        for i, j in zip(validators, votes):
-            if j == winningBlock:
-                i.stake += 1
-
-        # remove txs in winningBlock from tx list
-        txs = [i for i in self.txs if i not in winningBlock.txs]
-        self.txs = txs
-
-        # add winning block to the beginning of the blockchain
-        winningBlock.next = self.blockchain
-        self.blockchain = winningBlock"""
 
     def simulate(self):
         """Simulate the system"""
         
         for i in range(self.nHeartbeats):
             self.nextRound(i)
+
+        # update common blockchain among players
+        currBlock = self.players[0].blockchain
+        vset = set() # aggregate validator set
+        same = True
+        for i in self.players:
+            if i.blockchain: vset = vset.union(i.blockchain.validators)
+            if currBlock != i.blockchain:
+                same = False
+                break
+
+        if same and currBlock != None:
+            currBlock = block.Block(currBlock.txs, id=currBlock.id, proposer=currBlock.proposer)
+            currBlock.validators = vset
+            currBlock.next = self.blockchain
+            self.blockchain = currBlock
+
+            self.payout(vset, self.blockchain.proposer)
 
     def calcPercentStake(self):
         """Calculates the percent stake for each player"""

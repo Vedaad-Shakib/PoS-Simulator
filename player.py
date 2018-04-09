@@ -40,7 +40,7 @@ class Player:
     def action(self, heartbeat):
         """Executes the player's actions for heartbeat r"""
 
-        #t="\t"
+        t="\t"
         #print(t, self, ":")
         
         # if start of round, reset node role
@@ -79,13 +79,14 @@ class Player:
                     continue
                 
                 # if validator, sign block
-                if self.role == self.ROLES.VALIDATOR:
+                if self.role == self.ROLES.VALIDATOR and self not in message.validators:
                     if self.isValid(message):
-                        message.validators.add(self.id)
+                        #print(t, self, message.id)
+                        message.validators.add(self)
                         
                 # if block has more than 2/3 validator signatures, add to local blockchain
                 if len(message.validators) >= 2*solver.Solver.N_VALIDATORS/3 and message not in self.committedBlocks:
-                    fBlock = block.Block(message.txs, next=message.next, id=message.id) # create copy of block
+                    fBlock = block.Block(message.txs, next=message.next, id=message.id, proposer=message.proposer) # create copy of block
                     fBlock.validators = message.validators.copy() # copy validators
                     fBlock.next = self.blockchain
                     self.blockchain = fBlock
@@ -97,7 +98,7 @@ class Player:
                         if tx in self.mempool:
                             self.mempool.remove(tx)
                     # optimization: if common blockchain among all players, add to global blockchain to save mem
-                    
+
                 self.seenBlocks[message] = len(message.validators)
 
             # add to seen messages and outbound for propagation via gossip protocol
@@ -143,7 +144,7 @@ class Player:
         
         txs = random.sample(self.mempool, min(self.N_TRANSACTIONS, len(self.mempool)))
 
-        return block.Block(txs)
+        return block.Block(txs, proposer=self)
     
     def isValid(self, block):
         """Returns whether a block is valid or not"""

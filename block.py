@@ -4,7 +4,7 @@
 class Block:
     id = 0
     
-    def __init__(self, txs, next=None, id=-1):
+    def __init__(self, txs, next=None, id=-1, proposer=None):
         """Creates a new Block object given a list of transactions txs"""
 
         if id == -1:
@@ -16,8 +16,22 @@ class Block:
         self.next = next # next block in blockchain
         self.txs = txs   # list of transactions
 
-        self.validators = set() # set of validators signing the block
+        self.proposer   = proposer # proposer of the block
+        self.validators = set()    # set of validators signing the block
 
+        self.payed = False # whether the validator/proposers have been payed or not
+
+    def payout(self):
+        if self.payed:
+            return
+
+        self.payed = True
+        
+        for i in self.validators:
+            i.stake += 1
+
+        self.proposer.stake += 1
+        
     def __eq__(self, other):
         """Equality for Block objects is defined as having the same transactions"""
 

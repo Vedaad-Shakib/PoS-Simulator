@@ -31,11 +31,17 @@ def drive(opts):
     player.Player.P_TRANSACTIONS = opts["P_TRANSACTIONS"]
     player.Player.MEAN_PROP_TIME = opts["MEAN_PROP_TIME"]
 
+    random.seed(42)
+
     sol = solver.Solver(opts)
     
     sol.simulate()
 
     for i in sol.players:
         print(i)
+        print("\tstake:", i.stake)
         print("\t"+str(i.blockchain).replace("\n", "\n\t"))
         print()
+
+
+    print(sol.blockchain)

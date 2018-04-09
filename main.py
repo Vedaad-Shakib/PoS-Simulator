@@ -24,6 +24,7 @@ import solver
 import transaction
 
 from docopt import docopt
+import random
 
 if __name__=="__main__":
     args = docopt(__doc__)
