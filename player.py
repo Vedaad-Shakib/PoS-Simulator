@@ -9,7 +9,10 @@ import random
 import numpy as np
 
 class Player:
-    id = 0                # player id
+    id = 0 # player id
+    
+    MEAN_TX_FEE = 0.2  # mean transaction fee
+    STD_TX_FEE  = 0.05 # std of transaction fee
 
     def __init__(self, stake):
         """Creates a new Player object"""
@@ -132,7 +135,8 @@ class Player:
     def makeTransaction(self):
         """Returns a random transaction"""
 
-        return transaction.Transaction(self.id, 1)
+        fee = max(random.gauss(self.MEAN_TX_FEE, self.STD_TX_FEE), 0)
+        return transaction.Transaction(self.id, 0, fee)
 
     def proposeBlock(self):
         """Proposes a Block consisting of multiple random transactions"""

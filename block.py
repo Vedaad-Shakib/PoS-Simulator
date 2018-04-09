@@ -53,8 +53,8 @@ class Block:
                                str(block n-1)"""
         if self.next == None:
             return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])+\
-                   "; validators: %s"%(list(self.validators))
-        return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])+"; validators: %s \n"%(list(self.validators))+str(self.next)        
+                   "; validators: %s"%(list(self.validators))+"; prop: %s"%(self.proposer)
+        return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])+"; validators: %s"%(list(self.validators))+"; prop: %s \n"%(self.proposer)+str(self.next)
 
     def __repr__(self):
         return self.__str__()

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PLAYERS="[(10, 1), (10, 10000)]"
+PLAYERS="[(1, 0), (2, 1), (1, 2), (1, 4), (1, 8), (1, 16)]"
 N_VALIDATORS=4
 N_PROPOSERS=1
 N_CONNECTIONS=5

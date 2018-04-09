@@ -18,7 +18,7 @@ def drive(opts):
             "N_HEARTBEATS_IN_ROUND": 5,   # number of heartbeats (dt) in a round
             "N_ROUNDS": 5,                # number of rounds of proposal/validation/commit
             "N_TRANSACTIONS": 3,          # number of transactions per block
-            "P_TRANSACTIONS": 0.1,         # probability of transaction per player per heartbeat
+            "P_TRANSACTIONS": 0.1,        # probability of transaction per player per heartbeat
             "MEAN_PROP_TIME": 0.1         # mean propagation time of messages (exponential distribution)
            }"""
 

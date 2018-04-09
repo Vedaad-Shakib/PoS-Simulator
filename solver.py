@@ -10,8 +10,6 @@ import random
 import statistics
 
 class Solver:
-    EPS = 1e-6 # epsilon for floating point comparisons
-    
     def __init__(self, opts):
         """Initiates the solver class with the list of players and number of rounds"""
 
@@ -41,7 +39,7 @@ class Solver:
         """Choose proposer for next round; chance of being chosen proportional to stake"""
 
         totalStake = self.calcTotalStake()
-        coins = random.sample(list(range(1, totalStake+1)), self.N_PROPOSERS) 
+        coins = random.sample(list(range(1, int(totalStake+1))), self.N_PROPOSERS) 
 
         proposers = []
         
@@ -66,7 +64,7 @@ class Solver:
         """Chooses the validators for the next round based on stake they have in the system"""
 
         totalStake = self.calcTotalStake()
-        coins = random.sample(list(range(1, totalStake+1)), self.N_VALIDATORS) 
+        coins = random.sample(list(range(1, int(totalStake+1))), self.N_VALIDATORS) 
 
         validators = []
         
@@ -88,10 +86,19 @@ class Solver:
         return validators
 
     def payout(self, vset, proposer):
+        # validator/proposer rewards
         for i in vset:
             i.stake += 1
 
         proposer.stake += 1
+
+        # tx fee distribution
+        totFee = sum([i.fee for i in self.blockchain.txs])
+        n      = len(vset) + 1
+        for i in vset:
+            i.stake += totFee/n
+
+        proposer.stake += totFee/n
 
     def nextRound(self, heartbeat):
         """Simulates the next round"""
