@@ -14,6 +14,7 @@ Options:
   --ntransactions=<ntrans>        number of transactions per block [default: 3]
   --ptransactions=<ptrans>        probability of transaction per player per heartbeat [default: 0.1]
   --meanproptime=<meanproptime>   mean propagation time of messages [default: 0.1]
+  --seed=<seed>                   random seed [default: 42]
   --help                          show this
 """
 
@@ -36,7 +37,8 @@ if __name__=="__main__":
             "N_ROUNDS":              int(args["--nrounds"]),
             "N_TRANSACTIONS":        int(args["--ntransactions"]),       
             "P_TRANSACTIONS":      float(args["--ptransactions"]),      
-            "MEAN_PROP_TIME":      float(args["--meanproptime"])       
+            "MEAN_PROP_TIME":      float(args["--meanproptime"]),
+            "SEED":                  int(args["--seed"])
            }
 
     driver.drive(opts)
