@@ -39,4 +39,3 @@ def drive(opts):
         print(i)
         print("\t"+str(i.blockchain).replace("\n", "\n\t"))
         print()
-

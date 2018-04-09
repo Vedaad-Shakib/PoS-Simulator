@@ -5,7 +5,7 @@ Usage:
   main.py [options]
 
 Options:
-  --players=<players>             list of tuples e.g. "[(# of players, stake per player), ...]" [default: "[(100, 1)]"]
+  --players=<players>             list of tuples e.g. "[(# of players, stake per player), ...]" [default: [(100, 1)]]
   --nvalidators=<nval>            number of validators in the system [default: 5]
   --nproposers=<nprop>            number of proposers in the system [default: 1]
   --nconnections=<ncons>          number of connections in the system [default: 8]
@@ -27,7 +27,7 @@ from docopt import docopt
 
 if __name__=="__main__":
     args = docopt(__doc__)
-    opts = {"PLAYERS":         eval(eval(args["--players"])),      
+    opts = {"PLAYERS":              eval(args["--players"]),      
             "N_VALIDATORS":          int(args["--nvalidators"]),   
             "N_PROPOSERS":           int(args["--nproposers"]),     
             "N_CONNECTIONS":         int(args["--nconnections"]),   
@@ -37,6 +37,5 @@ if __name__=="__main__":
             "P_TRANSACTIONS":      float(args["--ptransactions"]),      
             "MEAN_PROP_TIME":      float(args["--meanproptime"])       
            }
-
 
     driver.drive(opts)
