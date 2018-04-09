@@ -11,12 +11,6 @@ import numpy as np
 class Player:
     id = 0                # player id
 
-    # defines node state constants (none, validator, proposer)
-    class ROLES:
-        NONE      = 0
-        VALIDATOR = 1
-        PROPOSER  = 2
-    
     def __init__(self, stake):
         """Creates a new Player object"""
 
@@ -35,7 +29,8 @@ class Player:
         self.seenBlocks      = {}    # map of seen blocks to nValidators
         self.committedBlocks = set() # set of blocks already added to blockchain (prevent duplicates)
 
-        self.role = self.ROLES.NONE
+        self.validator = False # whether the player is currently a validator or proposer
+        self.proposer  = False
 
     def action(self, heartbeat):
         """Executes the player's actions for heartbeat r"""
@@ -45,14 +40,14 @@ class Player:
         
         # if start of round, reset node role
         if heartbeat % solver.Solver.N_HEARTBEATS_IN_ROUND == 0:
+            self.proposer  = False
+            self.validator = False
             if self.id in self.solver.propSet:
-                self.role = self.ROLES.PROPOSER
-            elif self.id in self.solver.valSet: # bug? propSet may have overlap with valSet, in which case player would only be proposer, not validator
-                self.role = self.ROLES.VALIDATOR
-            else:
-                self.role = self.ROLES.NONE
+                self.proposer = True
+            if self.id in self.solver.valSet: 
+                self.validator = True
 
-            #print(t, "role reassigned:", self.role)
+            #print(t, "role reassigned:", self.proposer, self.validator)
 
         #print(t, "mempool:", self.mempool)
         #print(t, "inbound:", self.inbound)
@@ -79,7 +74,7 @@ class Player:
                     continue
                 
                 # if validator, sign block
-                if self.role == self.ROLES.VALIDATOR and self not in message.validators:
+                if self.validator and self not in message.validators:
                     if self.isValid(message):
                         #print(t, self, message.id)
                         message.validators.add(self)
@@ -106,7 +101,7 @@ class Player:
 
         self.inbound = list(filter(lambda x: x[1] > heartbeat, self.inbound)) # get rid of already-processed messages
         # if proposer and at the start of round, propose block
-        if heartbeat % solver.Solver.N_HEARTBEATS_IN_ROUND == 0 and self.role == self.ROLES.PROPOSER:
+        if heartbeat % solver.Solver.N_HEARTBEATS_IN_ROUND == 0 and self.proposer:
             pBlock = self.proposeBlock()
             self.seenBlocks[pBlock] = 0
             self.outbound.append([pBlock, heartbeat])

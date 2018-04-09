@@ -31,7 +31,7 @@ def drive(opts):
     player.Player.P_TRANSACTIONS = opts["P_TRANSACTIONS"]
     player.Player.MEAN_PROP_TIME = opts["MEAN_PROP_TIME"]
 
-    random.seed(42)
+    random.seed(100)
 
     sol = solver.Solver(opts)
     
