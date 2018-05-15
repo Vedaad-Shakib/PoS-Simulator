@@ -34,6 +34,8 @@ def drive(opts):
 
     random.seed(opts["SEED"])
 
+    print("====simulating for %s rounds, %s heartbeats per round====\n"%(opts["N_ROUNDS"], opts["N_HEARTBEATS_IN_ROUND"]))
+
     sol = solver.Solver(opts)
     
     sol.simulate()

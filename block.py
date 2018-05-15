@@ -44,7 +44,7 @@ class Block:
                                str(block n-1)"""
         if self.next == None:
             return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])
-        return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])
+        return "block %s: "%(self.id) + ", ".join([str(i) for i in self.txs]) + "\n" + str(self.next)
 
     def __repr__(self):
         return self.__str__()

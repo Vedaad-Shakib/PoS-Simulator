@@ -13,12 +13,12 @@ class Solver:
     def __init__(self, opts):
         """Initiates the solver class with the list of players and number of rounds"""
 
-        self.players = []                                                 # the list of nodes in the system
+        self.players = [] # the list of nodes in the system
         for nPlayers, stake in opts["PLAYERS"]:
             self.players.extend([player.Player(stake) for i in range(nPlayers)])
             
         self.nHeartbeats = opts["N_ROUNDS"]*Solver.N_HEARTBEATS_IN_ROUND # number of total heartbeats
-        self.heartbeat   = 0                                              # the heartbeat, or clock, of the system
+        self.heartbeat   = 0                                             # the heartbeat, or clock, of the system
 
         self.blockchain = None # common blockchain among all players
 
@@ -29,6 +29,10 @@ class Solver:
         self.N_PLAYERS = len(self.players)
             
         self.connectNetwork()
+
+        print("==NETWORK CONNECTIONS==")
+        for i in self.players:
+            print("%s: %s" % (i, i.connections))
 
     def connectNetwork(self):
         """Form the network of players through random assignment of connections"""

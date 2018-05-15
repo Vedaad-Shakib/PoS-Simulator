@@ -44,11 +44,13 @@ class Player:
     def action(self, heartbeat):
         """Executes the player's actions for heartbeat r"""
 
+        print("\n%s"%self)
+
         # if start of round, reset node role
         if heartbeat % solver.Solver.N_HEARTBEATS_IN_ROUND == 0:
+            print("STARTED NEW ROUND")
             self.proposer  = False
             if self.id == self.solver.propSet:
-                print("asdf")
                 self.proposer = True
 
             self.stage = states.States.Consensus.PRE_PRE_VOTE
@@ -60,7 +62,10 @@ class Player:
         for msg, timestamp in self.inbound:
             # don't have access to messages which arrive after the current heartbeat
             if timestamp > heartbeat:
+                print("received %s but timestamp > heartbeat" % msg)
                 continue
+            else:
+                print("received %s" % msg)
             
             # if inbound message is transaction, add to local mempool
             if msg.type == message.Message.MessageType.TRANSACTION:
@@ -69,6 +74,8 @@ class Player:
                 
                 self.mempool.add(msg.value)
                 self.seenTxs.add(msg.value)
+
+                self.outbound.append([msg, timestamp])
 
             # handle pre pre vote
             if self.stage == states.States.Consensus.PRE_PRE_VOTE and msg.type == message.Message.MessageType.BLOCK:
@@ -80,9 +87,12 @@ class Player:
                     
                 if self.isValid(msg.value):
                     pv = hash(msg.value)
+                    print("pre pre vote valid; moved to pre vote")
                 else:
                     pv = None
-                    
+                    print("pre pre vote invalid; moved to pre vote")
+
+                self.outbound.append([msg, timestamp])
                 self.outbound.append([message.Message(message.Message.MessageType.PRE_VOTE, pv, self.id), timestamp])
                 self.preVotes[pv] = set([self.id])
                 self.stage = states.States.Consensus.PRE_VOTE
@@ -102,6 +112,7 @@ class Player:
                     self.stage = states.States.Consensus.VOTE
                     self.votes[msg.value] = set([self.id])
                     self.outbound.append([message.Message(message.Message.MessageType.VOTE, msg.value, self.id), timestamp])
+                    print("moved to vote stage")
 
             if self.stage == states.States.Consensus.VOTE and msg.type == message.Message.MessageType.VOTE:
                 if msg.value not in self.votes:
@@ -113,8 +124,9 @@ class Player:
 
                 if len(self.votes[msg.value]) >= 2*self.solver.N_PLAYERS/3 and msg.value not in self.committedBlocks:
                     self.committedBlocks.add(msg.value)
-                    
-                    nBlock = self.seenBlocks[hash(msg.value)].copy()
+
+                    nBlock = self.seenBlocks[msg.value].copy()
+                    print("committed block %s" % (nBlock))
                     nBlock.next = self.blockchain
                     self.blockchain = nBlock
 
@@ -129,12 +141,21 @@ class Player:
             pBlock = self.proposeBlock()
             self.outbound.append([message.Message(message.Message.MessageType.BLOCK, pBlock, self.id), heartbeat])
             self.outbound.append([message.Message(message.Message.MessageType.PRE_VOTE, hash(pBlock), self.id), heartbeat])
+
+            self.seenBlocks[hash(pBlock)] = pBlock
+            self.preVotes[hash(pBlock)] = set([self.id])
+            self.stage = states.States.Consensus.PRE_VOTE
+            
+            print("proposed block")
                 
         # make transaction with probability p
         if random.random() < self.P_TRANSACTIONS:
             tx = self.makeTransaction()
             self.outbound.append([message.Message(message.Message.MessageType.TRANSACTION, tx, self.id), heartbeat])
             self.mempool.add(tx)
+
+        print("preVotes:", self.preVotes)
+        print("votes:", self.votes)
 
         self.sendOutbound()
 
@@ -144,6 +165,7 @@ class Player:
         for i in self.connections:
             for message, timestamp in self.outbound:
                 dt = np.random.exponential(self.MEAN_PROP_TIME) # add propagation time to timestamp
+                print("sent %s to %s" % (message, i))
                 i.inbound.append([message, timestamp+dt])
 
         self.outbound.clear()

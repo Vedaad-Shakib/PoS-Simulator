@@ -19,5 +19,9 @@ class Message:
         
         self.senderId = senderId
 
+    def __str__(self):
+        type = {0: "tx", 1: "prevote", 2: "vote", 3: "block"}
+        return "message %s; type %s, val %s, sender %s" % (self.id, type[self.type], self.value, self.senderId)
+
     
         

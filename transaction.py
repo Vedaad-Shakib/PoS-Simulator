@@ -15,20 +15,16 @@ class Transaction:
         Transaction.id += 1
 
     def __eq__(self, other):
-        """Define equality for Transaction objects"""
-
         if other == None:
             return False
         
         return self.id == other.id
 
     def __str__(self):
-        return "transaction %s; fee %s" % (self.id, round(self.fee, 2))
+        return "transaction %s, fee %s" % (self.id, round(self.fee, 2))
 
     def __repr__(self):
         return self.__str__()
 
     def __hash__(self):
-        """Define hash to make Transaction hashable"""
-        
         return self.id
