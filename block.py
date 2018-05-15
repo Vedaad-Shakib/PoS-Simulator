@@ -17,21 +17,12 @@ class Block:
         self.txs = txs   # list of transactions
 
         self.proposer   = proposer # proposer of the block
-        self.validators = set()    # set of validators signing the block
 
-        self.payed = False # whether the validator/proposers have been payed or not
-
-    def payout(self):
-        if self.payed:
-            return
-
-        self.payed = True
+    def copy(self):
+        new = Block(self.txs, self.next, self.id, self.proposer)
         
-        for i in self.validators:
-            i.stake += 1
+        return new
 
-        self.proposer.stake += 1
-        
     def __eq__(self, other):
         """Equality for Block objects is defined as having the same transactions"""
 
@@ -41,10 +32,10 @@ class Block:
         selfIds = [i.id for i in self.txs]
         otherIds = [i.id for i in other.txs]
 
-        return set(selfIds) == set(otherIds)
+        return set(selfIds) == set(otherIds) and self.next == other.next
 
     def __hash__(self):
-        """Hash for reasonz !"""
+        """Hash"""
 
         return self.id
 
@@ -52,9 +43,8 @@ class Block:
         """Str representation: block n: transaction x_i; validators: p_i
                                str(block n-1)"""
         if self.next == None:
-            return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])+\
-                   "; validators: %s"%(list(self.validators))+"; prop: %s"%(self.proposer)
-        return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])+"; validators: %s"%(list(self.validators))+"; prop: %s \n"%(self.proposer)+str(self.next)
+            return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])
+        return "block %s: "%(self.id)+", ".join([str(i) for i in self.txs])
 
     def __repr__(self):
         return self.__str__()

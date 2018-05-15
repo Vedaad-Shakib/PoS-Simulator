@@ -25,6 +25,8 @@ class Solver:
         # add pointer to solver to players
         for i in self.players:
             i.solver = self
+
+        self.N_PLAYERS = len(self.players)
             
         self.connectNetwork()
 
@@ -38,7 +40,9 @@ class Solver:
     def chooseProposers(self):
         """Choose proposer for next round; chance of being chosen proportional to stake"""
 
-        totalStake = self.calcTotalStake()
+        return random.choice([i.id for i in self.players])
+    
+        """totalStake = self.calcTotalStake()
         coins = random.sample(list(range(1, int(totalStake+1))), self.N_PROPOSERS) 
 
         proposers = []
@@ -58,32 +62,7 @@ class Solver:
         if len(proposers) != len(set(proposers)):
             proposers = self.chooseProposers()
         
-        return proposers
-
-    def chooseValidators(self):
-        """Chooses the validators for the next round based on stake they have in the system"""
-
-        totalStake = self.calcTotalStake()
-        coins = random.sample(list(range(1, int(totalStake+1))), self.N_VALIDATORS) 
-
-        validators = []
-        
-        startCoins = 0 # coin number right before the start of the current player's set of coins
-        endCoins = 0 # the player's last coin number
-        for i in self.players:
-            endCoins += i.stake
-            for j in coins:
-                if j <= endCoins and j > startCoins:
-                    validators.append(i)
-            startCoins = endCoins
-
-        validators = [i.id for i in validators]
-
-        # prevent player from being chosen twice
-        if len(validators) != len(set(validators)):
-            validators = self.chooseValidators()
-        
-        return validators
+        return proposers"""
 
     def payout(self, vset, proposer):
         # validator/proposer rewards
@@ -103,35 +82,23 @@ class Solver:
     def nextRound(self, heartbeat):
         """Simulates the next round"""
 
-        #print("heartbeat:", heartbeat)
-        t="\t"
-        
         # if start of round, reset validator, proposer set & update common blockchain
         if heartbeat % Solver.N_HEARTBEATS_IN_ROUND == 0:
-            self.valSet  = self.chooseValidators() # choose validator set
             self.propSet = self.chooseProposers()  # choose proposer set
-            #print(t, "assign new valSet:", self.valSet)
-            #print(t, "assign new propSet:", self.propSet)
-            #print()
 
             # update common blockchain among players
             currBlock = self.players[0].blockchain
-            vset = set() # aggregate validator set
             same = True
             for i in self.players:
-                if i.blockchain: vset = vset.union(i.blockchain.validators)
                 if currBlock != i.blockchain:
                     same = False
                     break
 
             if same and currBlock != None:
                 currBlock = block.Block(currBlock.txs, id=currBlock.id, proposer=currBlock.proposer)
-                currBlock.validators = vset
                 currBlock.next = self.blockchain
                 self.blockchain = currBlock
 
-                self.payout(vset, self.blockchain.proposer)
-        
         for i in self.players:
             i.action(heartbeat)
 
@@ -143,21 +110,16 @@ class Solver:
 
         # update common blockchain among players
         currBlock = self.players[0].blockchain
-        vset = set() # aggregate validator set
         same = True
         for i in self.players:
-            if i.blockchain: vset = vset.union(i.blockchain.validators)
             if currBlock != i.blockchain:
                 same = False
                 break
 
         if same and currBlock != None:
             currBlock = block.Block(currBlock.txs, id=currBlock.id, proposer=currBlock.proposer)
-            currBlock.validators = vset
             currBlock.next = self.blockchain
             self.blockchain = currBlock
-
-            self.payout(vset, self.blockchain.proposer)
 
     def calcPercentStake(self):
         """Calculates the percent stake for each player"""
