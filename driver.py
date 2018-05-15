@@ -22,10 +22,11 @@ def drive(opts):
             "MEAN_PROP_TIME": 0.1         # mean propagation time of messages (exponential distribution)
            }"""
 
-    solver.Solver.N_VALIDATORS = opts["N_VALIDATORS"]
-    solver.Solver.N_PROPOSERS = opts["N_PROPOSERS"]
-    solver.Solver.N_CONNECTIONS = opts["N_CONNECTIONS"]
+    solver.Solver.N_VALIDATORS          = opts["N_VALIDATORS"]
+    solver.Solver.N_PROPOSERS           = opts["N_PROPOSERS"]
+    solver.Solver.N_CONNECTIONS         = opts["N_CONNECTIONS"]
     solver.Solver.N_HEARTBEATS_IN_ROUND = opts["N_HEARTBEATS_IN_ROUND"]
+    solver.Solver.N_ROUNDS              = opts["N_ROUNDS"]
 
     player.Player.N_TRANSACTIONS = opts["N_TRANSACTIONS"]
     player.Player.P_TRANSACTIONS = opts["P_TRANSACTIONS"]
@@ -39,7 +40,6 @@ def drive(opts):
 
     for i in sol.players:
         print(i)
-        print("\tstake:", i.stake)
         print("\t"+str(i.blockchain).replace("\n", "\n\t"))
         print()
 

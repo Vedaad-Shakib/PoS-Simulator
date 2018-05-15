@@ -48,6 +48,7 @@ class Player:
         if heartbeat % solver.Solver.N_HEARTBEATS_IN_ROUND == 0:
             self.proposer  = False
             if self.id == self.solver.propSet:
+                print("asdf")
                 self.proposer = True
 
             self.stage = states.States.Consensus.PRE_PRE_VOTE
