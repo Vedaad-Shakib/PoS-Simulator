@@ -4,6 +4,7 @@
 import block
 import player
 import transaction
+import pbftconsensus
 
 import math
 import random
@@ -15,7 +16,7 @@ class Solver:
 
         self.players = [] # the list of nodes in the system
         for nPlayers, stake in opts["PLAYERS"]:
-            self.players.extend([player.Player(stake) for i in range(nPlayers)])
+            self.players.extend([player.Player(stake, pbftconsensus.PBFTConsensus()) for i in range(nPlayers)])
             
         self.nHeartbeats = opts["N_ROUNDS"]*Solver.N_HEARTBEATS_IN_ROUND # number of total heartbeats
         self.heartbeat   = 0                                             # the heartbeat, or clock, of the system
