@@ -45,8 +45,11 @@ class Player:
                 if VERBOSE: print("received %s but timestamp > heartbeat" % msg)
                 continue
             if VERBOSE: print("received %s" % msg)
+
+            received = self.consensus.processMessage(msg)
+            received = zip(received, [timestamp]*len(received))
             
-            self.outbound += self.consensus.processMessage(msg, timestamp)
+            self.outbound += received
             
         self.inbound = list(filter(lambda x: x[1] > heartbeat, self.inbound)) # get rid of processed messages
         

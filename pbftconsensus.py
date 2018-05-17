@@ -78,7 +78,7 @@ class PBFTConsensus:
 
         return outbound
 
-    def processMessage(self, msg, timestamp):
+    def processMessage(self, msg):
         """Process a message at specified heartbeat"""
 
         outbound = []
@@ -91,7 +91,7 @@ class PBFTConsensus:
             self.mempool.add(msg.value)
             self.seenTxs.add(msg.value)
 
-            outbound.append([msg, timestamp])
+            outbound.append(msg)
 
         # handle pre pre vote
         if self.stage == states.States.Consensus.PRE_PRE_VOTE and msg.type == message.Message.MessageType.BLOCK:
@@ -108,8 +108,8 @@ class PBFTConsensus:
                 pv = None
                 if VERBOSE: print("pre pre vote invalid; moved to pre vote")
 
-            outbound.append([msg, timestamp])
-            outbound.append([message.Message(message.Message.MessageType.PRE_VOTE, pv, self.player.id), timestamp])
+            outbound.append(msg)
+            outbound.append(message.Message(message.Message.MessageType.PRE_VOTE, pv, self.player.id))
             self.preVotes[pv] = set([self.player.id])
             self.stage = states.States.Consensus.PRE_VOTE
             # todo: add timeout
@@ -122,12 +122,12 @@ class PBFTConsensus:
 
             if msg.senderId not in self.preVotes[msg.value]:
                 self.preVotes[msg.value].add(msg.senderId)
-                outbound.append([msg, timestamp])
+                outbound.append(msg)
 
             if len(self.preVotes[msg.value]) >= 2*self.player.solver.N_PLAYERS/3:
                 self.stage = states.States.Consensus.VOTE
                 self.votes[msg.value] = set([self.player.id])
-                outbound.append([message.Message(message.Message.MessageType.VOTE, msg.value, self.player.id), timestamp])
+                outbound.append(message.Message(message.Message.MessageType.VOTE, msg.value, self.player.id))
                 if VERBOSE: print("moved to vote stage")
 
         # handle vote
@@ -137,7 +137,7 @@ class PBFTConsensus:
 
             if msg.senderId not in self.votes[msg.value]:
                 self.votes[msg.value].add(msg.senderId)
-                outbound.append([msg, timestamp])
+                outbound.append(msg)
 
             if len(self.votes[msg.value]) >= 2*self.player.solver.N_PLAYERS/3 and msg.value not in self.committedBlocks:
                 self.committedBlocks.add(msg.value)
