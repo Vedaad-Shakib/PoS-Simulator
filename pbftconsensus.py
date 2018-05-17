@@ -36,7 +36,9 @@ class PBFTConsensus:
 
     def roundInit(self):
         """Initializes instance variables and the such at the start of a new round"""
-        
+
+        outbound = []
+
         if VERBOSE: print("\n%s"%self.player)
 
         heartbeat = self.player.solver.heartbeat
@@ -56,8 +58,8 @@ class PBFTConsensus:
         # if proposer and at the start of round, propose block and send prevote
         if heartbeat % solver.Solver.N_HEARTBEATS_IN_ROUND == 0 and self.proposer:
             pBlock = self.proposeBlock()
-            self.outbound.append([message.Message(message.Message.MessageType.BLOCK, pBlock, self.player.id), heartbeat])
-            self.outbound.append([message.Message(message.Message.MessageType.PRE_VOTE, hash(pBlock), self.player.id), heartbeat])
+            outbound.append([message.Message(message.Message.MessageType.BLOCK, pBlock, self.player.id), heartbeat])
+            outbound.append([message.Message(message.Message.MessageType.PRE_VOTE, hash(pBlock), self.player.id), heartbeat])
 
             self.seenBlocks[hash(pBlock)] = pBlock
             self.preVotes[hash(pBlock)] = set([self.player.id])
@@ -68,30 +70,34 @@ class PBFTConsensus:
         # make transaction with probability p
         if random.random() < self.player.P_TRANSACTIONS:
             tx = self.makeTransaction()
-            self.outbound.append([message.Message(message.Message.MessageType.TRANSACTION, tx, self.player.id), heartbeat])
+            outbound.append([message.Message(message.Message.MessageType.TRANSACTION, tx, self.player.id), heartbeat])
             self.mempool.add(tx)
 
         if VERBOSE: print("preVotes:", self.preVotes)
         if VERBOSE: print("votes:", self.votes)
 
+        return outbound
+
     def processMessage(self, msg, timestamp):
         """Process a message at specified heartbeat"""
+
+        outbound = []
         
         # if inbound message is transaction, add to local mempool
         if msg.type == message.Message.MessageType.TRANSACTION:
             if msg.value in self.seenTxs:
-                return
+                return outbound
              
             self.mempool.add(msg.value)
             self.seenTxs.add(msg.value)
 
-            self.outbound.append([msg, timestamp])
+            outbound.append([msg, timestamp])
 
         # handle pre pre vote
         if self.stage == states.States.Consensus.PRE_PRE_VOTE and msg.type == message.Message.MessageType.BLOCK:
             # message value is block
             if hash(msg.value) in self.seenBlocks:
-                return
+                return outbound
                 
             self.seenBlocks[hash(msg.value)] = msg.value
                     
@@ -102,8 +108,8 @@ class PBFTConsensus:
                 pv = None
                 if VERBOSE: print("pre pre vote invalid; moved to pre vote")
 
-            self.outbound.append([msg, timestamp])
-            self.outbound.append([message.Message(message.Message.MessageType.PRE_VOTE, pv, self.player.id), timestamp])
+            outbound.append([msg, timestamp])
+            outbound.append([message.Message(message.Message.MessageType.PRE_VOTE, pv, self.player.id), timestamp])
             self.preVotes[pv] = set([self.player.id])
             self.stage = states.States.Consensus.PRE_VOTE
             # todo: add timeout
@@ -116,12 +122,12 @@ class PBFTConsensus:
 
             if msg.senderId not in self.preVotes[msg.value]:
                 self.preVotes[msg.value].add(msg.senderId)
-                self.outbound.append([msg, timestamp])
+                outbound.append([msg, timestamp])
 
             if len(self.preVotes[msg.value]) >= 2*self.player.solver.N_PLAYERS/3:
                 self.stage = states.States.Consensus.VOTE
                 self.votes[msg.value] = set([self.player.id])
-                self.outbound.append([message.Message(message.Message.MessageType.VOTE, msg.value, self.player.id), timestamp])
+                outbound.append([message.Message(message.Message.MessageType.VOTE, msg.value, self.player.id), timestamp])
                 if VERBOSE: print("moved to vote stage")
 
         # handle vote
@@ -131,7 +137,7 @@ class PBFTConsensus:
 
             if msg.senderId not in self.votes[msg.value]:
                 self.votes[msg.value].add(msg.senderId)
-                self.outbound.append([msg, timestamp])
+                outbound.append([msg, timestamp])
 
             if len(self.votes[msg.value]) >= 2*self.player.solver.N_PLAYERS/3 and msg.value not in self.committedBlocks:
                 self.committedBlocks.add(msg.value)
@@ -145,16 +151,9 @@ class PBFTConsensus:
                 for tx in nBlock.txs:
                     if tx in self.mempool:
                         self.mempool.remove(tx)
+                        
+        return outbound
 
-
-
-
-    def getOutbound(self):
-        return self.outbound
-
-    def clearOutbound(self):
-        self.outbound.clear()
-    
     def isValid(self, block):
         """Returns whether a block is valid or not"""
         

@@ -38,7 +38,7 @@ class Player:
     def action(self, heartbeat):
         """Executes the player's actions for heartbeat r"""
 
-        self.consensus.roundInit() # remove in real version
+        self.outbound += self.consensus.roundInit() # remove in real version
         
         for msg, timestamp in self.inbound:
             if timestamp > heartbeat:
@@ -46,13 +46,10 @@ class Player:
                 continue
             if VERBOSE: print("received %s" % msg)
             
-            self.consensus.processMessage(msg, timestamp)
+            self.outbound += self.consensus.processMessage(msg, timestamp)
             
         self.inbound = list(filter(lambda x: x[1] > heartbeat, self.inbound)) # get rid of processed messages
         
-        self.outbound += self.consensus.getOutbound() # update outbound messages from consensus results
-        self.consensus.clearOutbound() # clear consensus outbound queue
-
         self.blockchain = self.consensus.getBlockchain() # update blockchain from consensus scheme results
 
         self.sendOutbound() # send messages to connected players
