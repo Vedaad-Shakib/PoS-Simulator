@@ -6,6 +6,7 @@ import solver
 import transaction
 import states
 import message
+import pbftconsensus
 
 import random
 import numpy as np
@@ -16,7 +17,7 @@ class Player:
     MEAN_TX_FEE = 0.2  # mean transaction fee
     STD_TX_FEE  = 0.05 # std of transaction fee
 
-    def __init__(self, stake, consensus):
+    def __init__(self, stake):
         """Creates a new Player object"""
 
         self.id = Player.id # the player's id
@@ -29,13 +30,13 @@ class Player:
         self.inbound     = []   # inbound messages from other players in the network at heartbeat r
         self.outbound    = []   # outbound messages to other players in the network at heartbeat r
 
-        self.consensus = consensus
+        self.consensus = pbftconsensus.PBFTConsensus()
         self.consensus.player = self
 
     def action(self, heartbeat):
         """Executes the player's actions for heartbeat r"""
 
-        self.consensus.processInbound(self.inbound, heartbeat) # pass inbound messages to consensus scheme
+        self.consensus.processInbound(self.inbound) # pass inbound messages to consensus scheme
         self.inbound = list(filter(lambda x: x[1] > heartbeat, self.inbound)) # get rid of processed messages
         
         self.outbound += self.consensus.getOutbound() # update outbound messages from consensus results

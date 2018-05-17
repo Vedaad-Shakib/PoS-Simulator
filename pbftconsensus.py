@@ -34,11 +34,13 @@ class PBFTConsensus:
 
         self.proposer  = False
 
-    def processInbound(self, msgs, heartbeat):
+    def processInbound(self, msgs):
         self.inbound = msgs
         
         if VERBOSE: print("\n%s"%self.player)
-                
+
+        heartbeat = self.player.solver.heartbeat
+        
         # if start of round, reset node role
         if heartbeat % solver.Solver.N_HEARTBEATS_IN_ROUND == 0:
             if VERBOSE: print("STARTED NEW ROUND")
