@@ -11,6 +11,8 @@ import pbftconsensus
 import random
 import numpy as np
 
+VERBOSE = pbftconsensus.VERBOSE
+
 class Player:
     id = 0 # player id
     
@@ -36,7 +38,16 @@ class Player:
     def action(self, heartbeat):
         """Executes the player's actions for heartbeat r"""
 
-        self.consensus.processInbound(self.inbound) # pass inbound messages to consensus scheme
+        self.consensus.roundInit() # remove in real version
+        
+        for msg, timestamp in self.inbound:
+            if timestamp > heartbeat:
+                if VERBOSE: print("received %s but timestamp > heartbeat" % msg)
+                continue
+            if VERBOSE: print("received %s" % msg)
+            
+            self.consensus.processMessage(msg, timestamp)
+            
         self.inbound = list(filter(lambda x: x[1] > heartbeat, self.inbound)) # get rid of processed messages
         
         self.outbound += self.consensus.getOutbound() # update outbound messages from consensus results

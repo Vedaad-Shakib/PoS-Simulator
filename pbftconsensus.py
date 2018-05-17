@@ -34,8 +34,8 @@ class PBFTConsensus:
 
         self.proposer  = False
 
-    def processInbound(self, msgs):
-        self.inbound = msgs
+    def roundInit(self):
+        """Initializes instance variables and the such at the start of a new round"""
         
         if VERBOSE: print("\n%s"%self.player)
 
@@ -71,22 +71,12 @@ class PBFTConsensus:
             self.outbound.append([message.Message(message.Message.MessageType.TRANSACTION, tx, self.player.id), heartbeat])
             self.mempool.add(tx)
 
-        for msg, timestamp in self.inbound:
-            self.processMessage(msg, timestamp, heartbeat)
-
         if VERBOSE: print("preVotes:", self.preVotes)
         if VERBOSE: print("votes:", self.votes)
 
-    def processMessage(self, msg, timestamp, heartbeat):
+    def processMessage(self, msg, timestamp):
         """Process a message at specified heartbeat"""
-
-        # don't have access to messages which arrive after the current heartbeat
-        if timestamp > heartbeat:
-            if VERBOSE: print("received %s but timestamp > heartbeat" % msg)
-            return
-        else:
-            if VERBOSE: print("received %s" % msg)
-
+        
         # if inbound message is transaction, add to local mempool
         if msg.type == message.Message.MessageType.TRANSACTION:
             if msg.value in self.seenTxs:

@@ -16,9 +16,9 @@ sent message 0; type tx, val transaction 0, fee 0.23, sender 0 to player 4
 
 player 1
 STARTED NEW ROUND
-received message 0; type tx, val transaction 0, fee 0.23, sender 0 but timestamp > heartbeat
 preVotes: {}
 votes: {}
+received message 0; type tx, val transaction 0, fee 0.23, sender 0 but timestamp > heartbeat
 
 player 2
 STARTED NEW ROUND
@@ -37,16 +37,16 @@ sent message 2; type prevote, val 0, sender 3 to player 2
 
 player 4
 STARTED NEW ROUND
-received message 0; type tx, val transaction 0, fee 0.23, sender 0 but timestamp > heartbeat
 preVotes: {}
 votes: {}
+received message 0; type tx, val transaction 0, fee 0.23, sender 0 but timestamp > heartbeat
 
 player 0
+preVotes: {}
+votes: {}
 received message 1; type block, val block 0: , sender 3
 pre pre vote valid; moved to pre vote
 received message 2; type prevote, val 0, sender 3
-preVotes: {0: {0, 3}}
-votes: {}
 sent message 1; type block, val block 0: , sender 3 to player 1
 sent message 3; type prevote, val 0, sender 0 to player 1
 sent message 2; type prevote, val 0, sender 3 to player 1
@@ -55,13 +55,13 @@ sent message 3; type prevote, val 0, sender 0 to player 4
 sent message 2; type prevote, val 0, sender 3 to player 4
 
 player 1
+preVotes: {}
+votes: {}
 received message 0; type tx, val transaction 0, fee 0.23, sender 0
 received message 1; type block, val block 0: , sender 3
 pre pre vote valid; moved to pre vote
 received message 3; type prevote, val 0, sender 0
 received message 2; type prevote, val 0, sender 3
-preVotes: {0: {0, 1, 3}}
-votes: {}
 sent message 0; type tx, val transaction 0, fee 0.23, sender 0 to player 3
 sent message 1; type block, val block 0: , sender 3 to player 3
 sent message 4; type prevote, val 0, sender 1 to player 3
@@ -74,11 +74,11 @@ sent message 3; type prevote, val 0, sender 0 to player 0
 sent message 2; type prevote, val 0, sender 3 to player 0
 
 player 2
+preVotes: {}
+votes: {}
 received message 1; type block, val block 0: , sender 3
 pre pre vote valid; moved to pre vote
 received message 2; type prevote, val 0, sender 3
-preVotes: {0: {2, 3}}
-votes: {}
 sent message 1; type block, val block 0: , sender 3 to player 1
 sent message 5; type prevote, val 0, sender 2 to player 1
 sent message 2; type prevote, val 0, sender 3 to player 1
@@ -87,13 +87,13 @@ sent message 5; type prevote, val 0, sender 2 to player 0
 sent message 2; type prevote, val 0, sender 3 to player 0
 
 player 3
+preVotes: {0: {3}}
+votes: {}
 received message 0; type tx, val transaction 0, fee 0.23, sender 0
 received message 1; type block, val block 0: , sender 3
 received message 4; type prevote, val 0, sender 1
 received message 3; type prevote, val 0, sender 0
 received message 2; type prevote, val 0, sender 3
-preVotes: {0: {0, 1, 3}}
-votes: {}
 sent message 0; type tx, val transaction 0, fee 0.23, sender 0 to player 0
 sent message 4; type prevote, val 0, sender 1 to player 0
 sent message 3; type prevote, val 0, sender 0 to player 0
@@ -102,13 +102,13 @@ sent message 4; type prevote, val 0, sender 1 to player 2
 sent message 3; type prevote, val 0, sender 0 to player 2
 
 player 4
+preVotes: {}
+votes: {}
 received message 0; type tx, val transaction 0, fee 0.23, sender 0
 received message 1; type block, val block 0: , sender 3
 pre pre vote valid; moved to pre vote
 received message 3; type prevote, val 0, sender 0
 received message 2; type prevote, val 0, sender 3
-preVotes: {0: {0, 3, 4}}
-votes: {}
 sent message 0; type tx, val transaction 0, fee 0.23, sender 0 to player 0
 sent message 1; type block, val block 0: , sender 3 to player 0
 sent message 6; type prevote, val 0, sender 4 to player 0
@@ -121,6 +121,8 @@ sent message 3; type prevote, val 0, sender 0 to player 2
 sent message 2; type prevote, val 0, sender 3 to player 2
 
 player 0
+preVotes: {0: {0, 3}}
+votes: {}
 received message 0; type tx, val transaction 0, fee 0.23, sender 0
 received message 1; type block, val block 0: , sender 3
 received message 4; type prevote, val 0, sender 1
@@ -138,8 +140,6 @@ received message 1; type block, val block 0: , sender 3
 received message 6; type prevote, val 0, sender 4
 received message 3; type prevote, val 0, sender 0
 received message 2; type prevote, val 0, sender 3
-preVotes: {0: {0, 1, 2, 3}}
-votes: {0: {0}}
 sent message 0; type tx, val transaction 0, fee 0.23, sender 0 to player 1
 sent message 4; type prevote, val 0, sender 1 to player 1
 sent message 5; type prevote, val 0, sender 2 to player 1
@@ -150,6 +150,8 @@ sent message 5; type prevote, val 0, sender 2 to player 4
 sent message 7; type vote, val 0, sender 0 to player 4
 
 player 1
+preVotes: {0: {0, 1, 3}}
+votes: {}
 received message 1; type block, val block 0: , sender 3
 received message 5; type prevote, val 0, sender 2
 moved to vote stage
@@ -158,8 +160,6 @@ received message 0; type tx, val transaction 0, fee 0.23, sender 0
 received message 4; type prevote, val 0, sender 1
 received message 5; type prevote, val 0, sender 2
 received message 7; type vote, val 0, sender 0
-preVotes: {0: {0, 1, 2, 3}}
-votes: {0: {0, 1}}
 sent message 5; type prevote, val 0, sender 2 to player 3
 sent message 8; type vote, val 0, sender 1 to player 3
 sent message 7; type vote, val 0, sender 0 to player 3
@@ -168,6 +168,8 @@ sent message 8; type vote, val 0, sender 1 to player 0
 sent message 7; type vote, val 0, sender 0 to player 0
 
 player 2
+preVotes: {0: {2, 3}}
+votes: {}
 received message 0; type tx, val transaction 0, fee 0.23, sender 0
 received message 4; type prevote, val 0, sender 1
 received message 3; type prevote, val 0, sender 0
@@ -177,8 +179,6 @@ received message 1; type block, val block 0: , sender 3
 received message 6; type prevote, val 0, sender 4
 received message 3; type prevote, val 0, sender 0
 received message 2; type prevote, val 0, sender 3
-preVotes: {0: {0, 1, 2, 3}}
-votes: {0: {2}}
 sent message 0; type tx, val transaction 0, fee 0.23, sender 0 to player 1
 sent message 4; type prevote, val 0, sender 1 to player 1
 sent message 3; type prevote, val 0, sender 0 to player 1
@@ -189,12 +189,12 @@ sent message 3; type prevote, val 0, sender 0 to player 0
 sent message 9; type vote, val 0, sender 2 to player 0
 
 player 3
+preVotes: {0: {0, 1, 3}}
+votes: {}
 received message 5; type prevote, val 0, sender 2
 moved to vote stage
 received message 8; type vote, val 0, sender 1
 received message 7; type vote, val 0, sender 0
-preVotes: {0: {0, 1, 2, 3}}
-votes: {0: {0, 1, 3}}
 sent message 5; type prevote, val 0, sender 2 to player 0
 sent message 10; type vote, val 0, sender 3 to player 0
 sent message 8; type vote, val 0, sender 1 to player 0
@@ -205,13 +205,13 @@ sent message 8; type vote, val 0, sender 1 to player 2
 sent message 7; type vote, val 0, sender 0 to player 2
 
 player 4
+preVotes: {0: {0, 3, 4}}
+votes: {}
 received message 0; type tx, val transaction 0, fee 0.23, sender 0
 received message 4; type prevote, val 0, sender 1
 moved to vote stage
 received message 5; type prevote, val 0, sender 2
 received message 7; type vote, val 0, sender 0
-preVotes: {0: {0, 1, 3, 4}}
-votes: {0: {0, 4}}
 sent message 4; type prevote, val 0, sender 1 to player 0
 sent message 11; type vote, val 0, sender 4 to player 0
 sent message 7; type vote, val 0, sender 0 to player 0
@@ -220,6 +220,8 @@ sent message 11; type vote, val 0, sender 4 to player 2
 sent message 7; type vote, val 0, sender 0 to player 2
 
 player 0
+preVotes: {0: {0, 1, 2, 3}}
+votes: {0: {0}}
 received message 5; type prevote, val 0, sender 2
 received message 8; type vote, val 0, sender 1
 received message 7; type vote, val 0, sender 0
@@ -235,8 +237,6 @@ received message 7; type vote, val 0, sender 0
 received message 4; type prevote, val 0, sender 1
 received message 11; type vote, val 0, sender 4
 received message 7; type vote, val 0, sender 0
-preVotes: {0: {0, 1, 2, 3}}
-votes: {0: {0, 1, 2, 3, 4}}
 sent message 8; type vote, val 0, sender 1 to player 1
 sent message 9; type vote, val 0, sender 2 to player 1
 sent message 10; type vote, val 0, sender 3 to player 1
@@ -247,6 +247,8 @@ sent message 10; type vote, val 0, sender 3 to player 4
 sent message 11; type vote, val 0, sender 4 to player 4
 
 player 1
+preVotes: {0: {0, 1, 2, 3}}
+votes: {0: {0, 1}}
 received message 0; type tx, val transaction 0, fee 0.23, sender 0
 received message 4; type prevote, val 0, sender 1
 received message 3; type prevote, val 0, sender 0
@@ -256,8 +258,6 @@ received message 9; type vote, val 0, sender 2
 received message 10; type vote, val 0, sender 3
 committed block block 0: 
 received message 11; type vote, val 0, sender 4
-preVotes: {0: {0, 1, 2, 3}}
-votes: {0: {0, 1, 2, 3, 4}}
 sent message 9; type vote, val 0, sender 2 to player 3
 sent message 10; type vote, val 0, sender 3 to player 3
 sent message 11; type vote, val 0, sender 4 to player 3
@@ -266,6 +266,8 @@ sent message 10; type vote, val 0, sender 3 to player 0
 sent message 11; type vote, val 0, sender 4 to player 0
 
 player 2
+preVotes: {0: {0, 1, 2, 3}}
+votes: {0: {2}}
 received message 5; type prevote, val 0, sender 2
 received message 10; type vote, val 0, sender 3
 received message 8; type vote, val 0, sender 1
@@ -274,8 +276,6 @@ committed block block 0:
 received message 4; type prevote, val 0, sender 1
 received message 11; type vote, val 0, sender 4
 received message 7; type vote, val 0, sender 0
-preVotes: {0: {0, 1, 2, 3}}
-votes: {0: {0, 1, 2, 3, 4}}
 sent message 10; type vote, val 0, sender 3 to player 1
 sent message 8; type vote, val 0, sender 1 to player 1
 sent message 7; type vote, val 0, sender 0 to player 1
@@ -286,25 +286,25 @@ sent message 7; type vote, val 0, sender 0 to player 0
 sent message 11; type vote, val 0, sender 4 to player 0
 
 player 3
+preVotes: {0: {0, 1, 2, 3}}
+votes: {0: {0, 1, 3}}
 received message 9; type vote, val 0, sender 2
 committed block block 0: 
 received message 10; type vote, val 0, sender 3
 received message 11; type vote, val 0, sender 4
-preVotes: {0: {0, 1, 2, 3}}
-votes: {0: {0, 1, 2, 3, 4}}
 sent message 9; type vote, val 0, sender 2 to player 0
 sent message 11; type vote, val 0, sender 4 to player 0
 sent message 9; type vote, val 0, sender 2 to player 2
 sent message 11; type vote, val 0, sender 4 to player 2
 
 player 4
+preVotes: {0: {0, 1, 3, 4}}
+votes: {0: {0, 4}}
 received message 8; type vote, val 0, sender 1
 received message 9; type vote, val 0, sender 2
 committed block block 0: 
 received message 10; type vote, val 0, sender 3
 received message 11; type vote, val 0, sender 4
-preVotes: {0: {0, 1, 3, 4}}
-votes: {0: {0, 1, 2, 3, 4}}
 sent message 8; type vote, val 0, sender 1 to player 0
 sent message 9; type vote, val 0, sender 2 to player 0
 sent message 10; type vote, val 0, sender 3 to player 0
@@ -313,6 +313,8 @@ sent message 9; type vote, val 0, sender 2 to player 2
 sent message 10; type vote, val 0, sender 3 to player 2
 
 player 0
+preVotes: {0: {0, 1, 2, 3}}
+votes: {0: {0, 1, 2, 3, 4}}
 received message 9; type vote, val 0, sender 2
 received message 10; type vote, val 0, sender 3
 received message 11; type vote, val 0, sender 4
@@ -325,54 +327,52 @@ received message 11; type vote, val 0, sender 4
 received message 8; type vote, val 0, sender 1
 received message 9; type vote, val 0, sender 2
 received message 10; type vote, val 0, sender 3
-preVotes: {0: {0, 1, 2, 3}}
-votes: {0: {0, 1, 2, 3, 4}}
 sent message 12; type tx, val transaction 1, fee 0.22, sender 0 to player 1
 sent message 12; type tx, val transaction 1, fee 0.22, sender 0 to player 4
 
 player 1
+preVotes: {0: {0, 1, 2, 3}}
+votes: {0: {0, 1, 2, 3, 4}}
 received message 10; type vote, val 0, sender 3
 received message 8; type vote, val 0, sender 1
 received message 7; type vote, val 0, sender 0
 received message 11; type vote, val 0, sender 4
 received message 12; type tx, val transaction 1, fee 0.22, sender 0 but timestamp > heartbeat
-preVotes: {0: {0, 1, 2, 3}}
-votes: {0: {0, 1, 2, 3, 4}}
 
 player 2
+preVotes: {0: {0, 1, 2, 3}}
+votes: {0: {0, 1, 2, 3, 4}}
 received message 9; type vote, val 0, sender 2
 received message 11; type vote, val 0, sender 4
 received message 8; type vote, val 0, sender 1
 received message 9; type vote, val 0, sender 2
 received message 10; type vote, val 0, sender 3
-preVotes: {0: {0, 1, 2, 3}}
-votes: {0: {0, 1, 2, 3, 4}}
 
 player 3
 preVotes: {0: {0, 1, 2, 3}}
 votes: {0: {0, 1, 2, 3, 4}}
 
 player 4
-received message 12; type tx, val transaction 1, fee 0.22, sender 0 but timestamp > heartbeat
 preVotes: {0: {0, 1, 3, 4}}
 votes: {0: {0, 1, 2, 3, 4}}
+received message 12; type tx, val transaction 1, fee 0.22, sender 0 but timestamp > heartbeat
 sent message 13; type tx, val transaction 2, fee 0.18, sender 4 to player 0
 sent message 13; type tx, val transaction 2, fee 0.18, sender 4 to player 2
 
 player 0
 STARTED NEW ROUND
-received message 13; type tx, val transaction 2, fee 0.18, sender 4
 preVotes: {}
 votes: {}
+received message 13; type tx, val transaction 2, fee 0.18, sender 4
 sent message 13; type tx, val transaction 2, fee 0.18, sender 4 to player 1
 sent message 13; type tx, val transaction 2, fee 0.18, sender 4 to player 4
 
 player 1
 STARTED NEW ROUND
-received message 12; type tx, val transaction 1, fee 0.22, sender 0
-received message 13; type tx, val transaction 2, fee 0.18, sender 4
 preVotes: {}
 votes: {}
+received message 12; type tx, val transaction 1, fee 0.22, sender 0
+received message 13; type tx, val transaction 2, fee 0.18, sender 4
 sent message 12; type tx, val transaction 1, fee 0.22, sender 0 to player 3
 sent message 13; type tx, val transaction 2, fee 0.18, sender 4 to player 3
 sent message 12; type tx, val transaction 1, fee 0.22, sender 0 to player 0
@@ -381,9 +381,9 @@ sent message 13; type tx, val transaction 2, fee 0.18, sender 4 to player 0
 player 2
 STARTED NEW ROUND
 proposed block
-received message 13; type tx, val transaction 2, fee 0.18, sender 4
 preVotes: {1: {2}}
 votes: {}
+received message 13; type tx, val transaction 2, fee 0.18, sender 4
 sent message 14; type block, val block 1: transaction 0, fee 0.23, sender 2 to player 1
 sent message 15; type prevote, val 1, sender 2 to player 1
 sent message 13; type tx, val transaction 2, fee 0.18, sender 4 to player 1
@@ -393,10 +393,10 @@ sent message 13; type tx, val transaction 2, fee 0.18, sender 4 to player 0
 
 player 3
 STARTED NEW ROUND
-received message 12; type tx, val transaction 1, fee 0.22, sender 0
-received message 13; type tx, val transaction 2, fee 0.18, sender 4
 preVotes: {}
 votes: {}
+received message 12; type tx, val transaction 1, fee 0.22, sender 0
+received message 13; type tx, val transaction 2, fee 0.18, sender 4
 sent message 12; type tx, val transaction 1, fee 0.22, sender 0 to player 0
 sent message 13; type tx, val transaction 2, fee 0.18, sender 4 to player 0
 sent message 12; type tx, val transaction 1, fee 0.22, sender 0 to player 2
@@ -404,16 +404,18 @@ sent message 13; type tx, val transaction 2, fee 0.18, sender 4 to player 2
 
 player 4
 STARTED NEW ROUND
-received message 12; type tx, val transaction 1, fee 0.22, sender 0
-received message 13; type tx, val transaction 2, fee 0.18, sender 4
 preVotes: {}
 votes: {}
+received message 12; type tx, val transaction 1, fee 0.22, sender 0
+received message 13; type tx, val transaction 2, fee 0.18, sender 4
 sent message 12; type tx, val transaction 1, fee 0.22, sender 0 to player 0
 sent message 13; type tx, val transaction 2, fee 0.18, sender 4 to player 0
 sent message 12; type tx, val transaction 1, fee 0.22, sender 0 to player 2
 sent message 13; type tx, val transaction 2, fee 0.18, sender 4 to player 2
 
 player 0
+preVotes: {}
+votes: {}
 received message 12; type tx, val transaction 1, fee 0.22, sender 0
 received message 13; type tx, val transaction 2, fee 0.18, sender 4
 received message 14; type block, val block 1: transaction 0, fee 0.23, sender 2
@@ -424,8 +426,6 @@ received message 12; type tx, val transaction 1, fee 0.22, sender 0
 received message 13; type tx, val transaction 2, fee 0.18, sender 4
 received message 12; type tx, val transaction 1, fee 0.22, sender 0
 received message 13; type tx, val transaction 2, fee 0.18, sender 4
-preVotes: {1: {0, 2}}
-votes: {}
 sent message 12; type tx, val transaction 1, fee 0.22, sender 0 to player 1
 sent message 14; type block, val block 1: transaction 0, fee 0.23, sender 2 to player 1
 sent message 16; type prevote, val 1, sender 0 to player 1
@@ -436,6 +436,8 @@ sent message 16; type prevote, val 1, sender 0 to player 4
 sent message 15; type prevote, val 1, sender 2 to player 4
 
 player 1
+preVotes: {}
+votes: {}
 received message 14; type block, val block 1: transaction 0, fee 0.23, sender 2
 pre pre vote valid; moved to pre vote
 received message 15; type prevote, val 1, sender 2
@@ -444,8 +446,6 @@ received message 12; type tx, val transaction 1, fee 0.22, sender 0
 received message 14; type block, val block 1: transaction 0, fee 0.23, sender 2
 received message 16; type prevote, val 1, sender 0
 received message 15; type prevote, val 1, sender 2
-preVotes: {1: {0, 1, 2}}
-votes: {}
 sent message 14; type block, val block 1: transaction 0, fee 0.23, sender 2 to player 3
 sent message 17; type prevote, val 1, sender 1 to player 3
 sent message 15; type prevote, val 1, sender 2 to player 3
@@ -456,24 +456,24 @@ sent message 15; type prevote, val 1, sender 2 to player 0
 sent message 16; type prevote, val 1, sender 0 to player 0
 
 player 2
-received message 12; type tx, val transaction 1, fee 0.22, sender 0
-received message 13; type tx, val transaction 2, fee 0.18, sender 4
-received message 12; type tx, val transaction 1, fee 0.22, sender 0
-received message 13; type tx, val transaction 2, fee 0.18, sender 4
 preVotes: {1: {2}}
 votes: {}
+received message 12; type tx, val transaction 1, fee 0.22, sender 0
+received message 13; type tx, val transaction 2, fee 0.18, sender 4
+received message 12; type tx, val transaction 1, fee 0.22, sender 0
+received message 13; type tx, val transaction 2, fee 0.18, sender 4
 sent message 12; type tx, val transaction 1, fee 0.22, sender 0 to player 1
 sent message 12; type tx, val transaction 1, fee 0.22, sender 0 to player 0
 
 player 3
+preVotes: {}
+votes: {}
 received message 14; type block, val block 1: transaction 0, fee 0.23, sender 2
 pre pre vote valid; moved to pre vote
 received message 17; type prevote, val 1, sender 1
 received message 15; type prevote, val 1, sender 2
 received message 16; type prevote, val 1, sender 0
 moved to vote stage
-preVotes: {1: {0, 1, 2, 3}}
-votes: {1: {3}}
 sent message 14; type block, val block 1: transaction 0, fee 0.23, sender 2 to player 0
 sent message 18; type prevote, val 1, sender 3 to player 0
 sent message 17; type prevote, val 1, sender 1 to player 0
@@ -488,13 +488,13 @@ sent message 16; type prevote, val 1, sender 0 to player 2
 sent message 19; type vote, val 1, sender 3 to player 2
 
 player 4
+preVotes: {}
+votes: {}
 received message 12; type tx, val transaction 1, fee 0.22, sender 0
 received message 14; type block, val block 1: transaction 0, fee 0.23, sender 2
 pre pre vote valid; moved to pre vote
 received message 16; type prevote, val 1, sender 0
 received message 15; type prevote, val 1, sender 2
-preVotes: {1: {0, 2, 4}}
-votes: {}
 sent message 14; type block, val block 1: transaction 0, fee 0.23, sender 2 to player 0
 sent message 20; type prevote, val 1, sender 4 to player 0
 sent message 16; type prevote, val 1, sender 0 to player 0
@@ -505,6 +505,8 @@ sent message 16; type prevote, val 1, sender 0 to player 2
 sent message 15; type prevote, val 1, sender 2 to player 2
 
 player 0
+preVotes: {1: {0, 2}}
+votes: {}
 received message 14; type block, val block 1: transaction 0, fee 0.23, sender 2
 received message 17; type prevote, val 1, sender 1
 received message 15; type prevote, val 1, sender 2
@@ -521,8 +523,6 @@ received message 14; type block, val block 1: transaction 0, fee 0.23, sender 2
 received message 20; type prevote, val 1, sender 4
 received message 16; type prevote, val 1, sender 0
 received message 15; type prevote, val 1, sender 2
-preVotes: {1: {0, 1, 2, 3}}
-votes: {1: {0, 3}}
 sent message 17; type prevote, val 1, sender 1 to player 1
 sent message 18; type prevote, val 1, sender 3 to player 1
 sent message 21; type vote, val 1, sender 0 to player 1
@@ -533,14 +533,14 @@ sent message 21; type vote, val 1, sender 0 to player 4
 sent message 19; type vote, val 1, sender 3 to player 4
 
 player 1
+preVotes: {1: {0, 1, 2}}
+votes: {}
 received message 12; type tx, val transaction 1, fee 0.22, sender 0
 received message 17; type prevote, val 1, sender 1
 received message 18; type prevote, val 1, sender 3
 moved to vote stage
 received message 21; type vote, val 1, sender 0
 received message 19; type vote, val 1, sender 3
-preVotes: {1: {0, 1, 2, 3}}
-votes: {1: {0, 1, 3}}
 sent message 18; type prevote, val 1, sender 3 to player 3
 sent message 22; type vote, val 1, sender 1 to player 3
 sent message 21; type vote, val 1, sender 0 to player 3
@@ -551,6 +551,8 @@ sent message 21; type vote, val 1, sender 0 to player 0
 sent message 19; type vote, val 1, sender 3 to player 0
 
 player 2
+preVotes: {1: {2}}
+votes: {}
 received message 14; type block, val block 1: transaction 0, fee 0.23, sender 2
 received message 18; type prevote, val 1, sender 3
 received message 17; type prevote, val 1, sender 1
@@ -562,8 +564,6 @@ received message 14; type block, val block 1: transaction 0, fee 0.23, sender 2
 received message 20; type prevote, val 1, sender 4
 received message 16; type prevote, val 1, sender 0
 received message 15; type prevote, val 1, sender 2
-preVotes: {1: {0, 1, 2, 3}}
-votes: {1: {2, 3}}
 sent message 18; type prevote, val 1, sender 3 to player 1
 sent message 17; type prevote, val 1, sender 1 to player 1
 sent message 16; type prevote, val 1, sender 0 to player 1
@@ -576,25 +576,25 @@ sent message 23; type vote, val 1, sender 2 to player 0
 sent message 19; type vote, val 1, sender 3 to player 0
 
 player 3
+preVotes: {1: {0, 1, 2, 3}}
+votes: {1: {3}}
 received message 18; type prevote, val 1, sender 3
 received message 22; type vote, val 1, sender 1
 received message 21; type vote, val 1, sender 0
 received message 19; type vote, val 1, sender 3
-preVotes: {1: {0, 1, 2, 3}}
-votes: {1: {0, 1, 3}}
 sent message 22; type vote, val 1, sender 1 to player 0
 sent message 21; type vote, val 1, sender 0 to player 0
 sent message 22; type vote, val 1, sender 1 to player 2
 sent message 21; type vote, val 1, sender 0 to player 2
 
 player 4
+preVotes: {1: {0, 2, 4}}
+votes: {}
 received message 17; type prevote, val 1, sender 1
 moved to vote stage
 received message 18; type prevote, val 1, sender 3
 received message 21; type vote, val 1, sender 0
 received message 19; type vote, val 1, sender 3
-preVotes: {1: {0, 1, 2, 4}}
-votes: {1: {0, 3, 4}}
 sent message 17; type prevote, val 1, sender 1 to player 0
 sent message 24; type vote, val 1, sender 4 to player 0
 sent message 21; type vote, val 1, sender 0 to player 0
@@ -605,6 +605,8 @@ sent message 21; type vote, val 1, sender 0 to player 2
 sent message 19; type vote, val 1, sender 3 to player 2
 
 player 0
+preVotes: {1: {0, 1, 2, 3}}
+votes: {1: {0, 3}}
 received message 18; type prevote, val 1, sender 3
 received message 22; type vote, val 1, sender 1
 received message 21; type vote, val 1, sender 0
@@ -621,8 +623,6 @@ received message 17; type prevote, val 1, sender 1
 received message 24; type vote, val 1, sender 4
 received message 21; type vote, val 1, sender 0
 received message 19; type vote, val 1, sender 3
-preVotes: {1: {0, 1, 2, 3}}
-votes: {1: {0, 1, 2, 3, 4}}
 sent message 25; type tx, val transaction 3, fee 0.27, sender 0 to player 1
 sent message 22; type vote, val 1, sender 1 to player 1
 sent message 23; type vote, val 1, sender 2 to player 1
@@ -633,6 +633,8 @@ sent message 23; type vote, val 1, sender 2 to player 4
 sent message 24; type vote, val 1, sender 4 to player 4
 
 player 1
+preVotes: {1: {0, 1, 2, 3}}
+votes: {1: {0, 1, 3}}
 received message 18; type prevote, val 1, sender 3
 received message 17; type prevote, val 1, sender 1
 received message 16; type prevote, val 1, sender 0
@@ -643,14 +645,14 @@ received message 25; type tx, val transaction 3, fee 0.27, sender 0 but timestam
 received message 22; type vote, val 1, sender 1
 received message 23; type vote, val 1, sender 2
 received message 24; type vote, val 1, sender 4
-preVotes: {1: {0, 1, 2, 3}}
-votes: {1: {0, 1, 2, 3, 4}}
 sent message 23; type vote, val 1, sender 2 to player 3
 sent message 24; type vote, val 1, sender 4 to player 3
 sent message 23; type vote, val 1, sender 2 to player 0
 sent message 24; type vote, val 1, sender 4 to player 0
 
 player 2
+preVotes: {1: {0, 1, 2, 3}}
+votes: {1: {2, 3}}
 received message 22; type vote, val 1, sender 1
 received message 21; type vote, val 1, sender 0
 committed block block 1: transaction 0, fee 0.23
@@ -658,8 +660,6 @@ received message 17; type prevote, val 1, sender 1
 received message 24; type vote, val 1, sender 4
 received message 21; type vote, val 1, sender 0
 received message 19; type vote, val 1, sender 3
-preVotes: {1: {0, 1, 2, 3}}
-votes: {1: {0, 1, 2, 3, 4}}
 sent message 22; type vote, val 1, sender 1 to player 1
 sent message 21; type vote, val 1, sender 0 to player 1
 sent message 24; type vote, val 1, sender 4 to player 1
@@ -668,30 +668,32 @@ sent message 21; type vote, val 1, sender 0 to player 0
 sent message 24; type vote, val 1, sender 4 to player 0
 
 player 3
+preVotes: {1: {0, 1, 2, 3}}
+votes: {1: {0, 1, 3}}
 received message 23; type vote, val 1, sender 2
 committed block block 1: transaction 0, fee 0.23
 received message 24; type vote, val 1, sender 4
-preVotes: {1: {0, 1, 2, 3}}
-votes: {1: {0, 1, 2, 3, 4}}
 sent message 23; type vote, val 1, sender 2 to player 0
 sent message 24; type vote, val 1, sender 4 to player 0
 sent message 23; type vote, val 1, sender 2 to player 2
 sent message 24; type vote, val 1, sender 4 to player 2
 
 player 4
+preVotes: {1: {0, 1, 2, 4}}
+votes: {1: {0, 3, 4}}
 received message 25; type tx, val transaction 3, fee 0.27, sender 0 but timestamp > heartbeat
 received message 22; type vote, val 1, sender 1
 committed block block 1: transaction 0, fee 0.23
 received message 23; type vote, val 1, sender 2
 received message 24; type vote, val 1, sender 4
-preVotes: {1: {0, 1, 2, 4}}
-votes: {1: {0, 1, 2, 3, 4}}
 sent message 22; type vote, val 1, sender 1 to player 0
 sent message 23; type vote, val 1, sender 2 to player 0
 sent message 22; type vote, val 1, sender 1 to player 2
 sent message 23; type vote, val 1, sender 2 to player 2
 
 player 0
+preVotes: {1: {0, 1, 2, 3}}
+votes: {1: {0, 1, 2, 3, 4}}
 received message 23; type vote, val 1, sender 2
 received message 24; type vote, val 1, sender 4
 received message 22; type vote, val 1, sender 1
@@ -701,49 +703,47 @@ received message 23; type vote, val 1, sender 2
 received message 24; type vote, val 1, sender 4
 received message 22; type vote, val 1, sender 1
 received message 23; type vote, val 1, sender 2
-preVotes: {1: {0, 1, 2, 3}}
-votes: {1: {0, 1, 2, 3, 4}}
 
 player 1
+preVotes: {1: {0, 1, 2, 3}}
+votes: {1: {0, 1, 2, 3, 4}}
 received message 25; type tx, val transaction 3, fee 0.27, sender 0
 received message 22; type vote, val 1, sender 1
 received message 21; type vote, val 1, sender 0
 received message 24; type vote, val 1, sender 4
-preVotes: {1: {0, 1, 2, 3}}
-votes: {1: {0, 1, 2, 3, 4}}
 sent message 25; type tx, val transaction 3, fee 0.27, sender 0 to player 3
 sent message 25; type tx, val transaction 3, fee 0.27, sender 0 to player 0
 
 player 2
+preVotes: {1: {0, 1, 2, 3}}
+votes: {1: {0, 1, 2, 3, 4}}
 received message 23; type vote, val 1, sender 2
 received message 24; type vote, val 1, sender 4
 received message 22; type vote, val 1, sender 1
 received message 23; type vote, val 1, sender 2
-preVotes: {1: {0, 1, 2, 3}}
-votes: {1: {0, 1, 2, 3, 4}}
 
 player 3
-received message 25; type tx, val transaction 3, fee 0.27, sender 0
 preVotes: {1: {0, 1, 2, 3}}
 votes: {1: {0, 1, 2, 3, 4}}
+received message 25; type tx, val transaction 3, fee 0.27, sender 0
 sent message 25; type tx, val transaction 3, fee 0.27, sender 0 to player 0
 sent message 25; type tx, val transaction 3, fee 0.27, sender 0 to player 2
 
 player 4
-received message 25; type tx, val transaction 3, fee 0.27, sender 0
 preVotes: {1: {0, 1, 2, 4}}
 votes: {1: {0, 1, 2, 3, 4}}
+received message 25; type tx, val transaction 3, fee 0.27, sender 0
 sent message 25; type tx, val transaction 3, fee 0.27, sender 0 to player 0
 sent message 25; type tx, val transaction 3, fee 0.27, sender 0 to player 2
 
 player 0
 STARTED NEW ROUND
 proposed block
-received message 25; type tx, val transaction 3, fee 0.27, sender 0
-received message 25; type tx, val transaction 3, fee 0.27, sender 0
-received message 25; type tx, val transaction 3, fee 0.27, sender 0
 preVotes: {2: {0}}
 votes: {}
+received message 25; type tx, val transaction 3, fee 0.27, sender 0
+received message 25; type tx, val transaction 3, fee 0.27, sender 0
+received message 25; type tx, val transaction 3, fee 0.27, sender 0
 sent message 26; type block, val block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18, sender 0 to player 1
 sent message 27; type prevote, val 2, sender 0 to player 1
 sent message 25; type tx, val transaction 3, fee 0.27, sender 0 to player 1
@@ -753,53 +753,53 @@ sent message 25; type tx, val transaction 3, fee 0.27, sender 0 to player 4
 
 player 1
 STARTED NEW ROUND
+preVotes: {}
+votes: {}
 received message 26; type block, val block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18, sender 0 but timestamp > heartbeat
 received message 27; type prevote, val 2, sender 0 but timestamp > heartbeat
 received message 25; type tx, val transaction 3, fee 0.27, sender 0
-preVotes: {}
-votes: {}
 sent message 28; type tx, val transaction 4, fee 0.26, sender 1 to player 3
 sent message 28; type tx, val transaction 4, fee 0.26, sender 1 to player 0
 
 player 2
 STARTED NEW ROUND
-received message 25; type tx, val transaction 3, fee 0.27, sender 0
-received message 25; type tx, val transaction 3, fee 0.27, sender 0
 preVotes: {}
 votes: {}
+received message 25; type tx, val transaction 3, fee 0.27, sender 0
+received message 25; type tx, val transaction 3, fee 0.27, sender 0
 sent message 25; type tx, val transaction 3, fee 0.27, sender 0 to player 1
 sent message 25; type tx, val transaction 3, fee 0.27, sender 0 to player 0
 
 player 3
 STARTED NEW ROUND
-received message 28; type tx, val transaction 4, fee 0.26, sender 1 but timestamp > heartbeat
 preVotes: {}
 votes: {}
+received message 28; type tx, val transaction 4, fee 0.26, sender 1 but timestamp > heartbeat
 
 player 4
 STARTED NEW ROUND
+preVotes: {}
+votes: {}
 received message 26; type block, val block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18, sender 0 but timestamp > heartbeat
 received message 27; type prevote, val 2, sender 0 but timestamp > heartbeat
 received message 25; type tx, val transaction 3, fee 0.27, sender 0
-preVotes: {}
-votes: {}
 
 player 0
-received message 28; type tx, val transaction 4, fee 0.26, sender 1
-received message 25; type tx, val transaction 3, fee 0.27, sender 0
 preVotes: {2: {0}}
 votes: {}
+received message 28; type tx, val transaction 4, fee 0.26, sender 1
+received message 25; type tx, val transaction 3, fee 0.27, sender 0
 sent message 28; type tx, val transaction 4, fee 0.26, sender 1 to player 1
 sent message 28; type tx, val transaction 4, fee 0.26, sender 1 to player 4
 
 player 1
+preVotes: {}
+votes: {}
 received message 26; type block, val block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18, sender 0
 pre pre vote valid; moved to pre vote
 received message 27; type prevote, val 2, sender 0
 received message 25; type tx, val transaction 3, fee 0.27, sender 0
 received message 28; type tx, val transaction 4, fee 0.26, sender 1
-preVotes: {2: {0, 1}}
-votes: {}
 sent message 26; type block, val block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18, sender 0 to player 3
 sent message 29; type prevote, val 2, sender 1 to player 3
 sent message 27; type prevote, val 2, sender 0 to player 3
@@ -814,14 +814,14 @@ preVotes: {}
 votes: {}
 
 player 3
+preVotes: {}
+votes: {}
 received message 28; type tx, val transaction 4, fee 0.26, sender 1
 received message 26; type block, val block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18, sender 0
 pre pre vote valid; moved to pre vote
 received message 29; type prevote, val 2, sender 1
 received message 27; type prevote, val 2, sender 0
 received message 28; type tx, val transaction 4, fee 0.26, sender 1
-preVotes: {2: {0, 1, 3}}
-votes: {}
 sent message 28; type tx, val transaction 4, fee 0.26, sender 1 to player 0
 sent message 26; type block, val block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18, sender 0 to player 0
 sent message 30; type prevote, val 2, sender 3 to player 0
@@ -834,12 +834,12 @@ sent message 29; type prevote, val 2, sender 1 to player 2
 sent message 27; type prevote, val 2, sender 0 to player 2
 
 player 4
+preVotes: {}
+votes: {}
 received message 26; type block, val block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18, sender 0
 pre pre vote valid; moved to pre vote
 received message 27; type prevote, val 2, sender 0
 received message 28; type tx, val transaction 4, fee 0.26, sender 1
-preVotes: {2: {0, 4}}
-votes: {}
 sent message 26; type block, val block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18, sender 0 to player 0
 sent message 31; type prevote, val 2, sender 4 to player 0
 sent message 27; type prevote, val 2, sender 0 to player 0
@@ -850,6 +850,8 @@ sent message 27; type prevote, val 2, sender 0 to player 2
 sent message 28; type tx, val transaction 4, fee 0.26, sender 1 to player 2
 
 player 0
+preVotes: {2: {0}}
+votes: {}
 received message 26; type block, val block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18, sender 0
 received message 29; type prevote, val 2, sender 1
 received message 27; type prevote, val 2, sender 0
@@ -864,8 +866,6 @@ received message 31; type prevote, val 2, sender 4
 moved to vote stage
 received message 27; type prevote, val 2, sender 0
 received message 28; type tx, val transaction 4, fee 0.26, sender 1
-preVotes: {2: {0, 1, 3, 4}}
-votes: {2: {0}}
 sent message 29; type prevote, val 2, sender 1 to player 1
 sent message 30; type prevote, val 2, sender 3 to player 1
 sent message 31; type prevote, val 2, sender 4 to player 1
@@ -876,13 +876,13 @@ sent message 31; type prevote, val 2, sender 4 to player 4
 sent message 32; type vote, val 2, sender 0 to player 4
 
 player 1
+preVotes: {2: {0, 1}}
+votes: {}
 received message 29; type prevote, val 2, sender 1
 received message 30; type prevote, val 2, sender 3
 received message 31; type prevote, val 2, sender 4
 moved to vote stage
 received message 32; type vote, val 2, sender 0
-preVotes: {2: {0, 1, 3, 4}}
-votes: {2: {0, 1}}
 sent message 30; type prevote, val 2, sender 3 to player 3
 sent message 31; type prevote, val 2, sender 4 to player 3
 sent message 33; type vote, val 2, sender 1 to player 3
@@ -893,6 +893,8 @@ sent message 33; type vote, val 2, sender 1 to player 0
 sent message 32; type vote, val 2, sender 0 to player 0
 
 player 2
+preVotes: {}
+votes: {}
 received message 28; type tx, val transaction 4, fee 0.26, sender 1
 received message 26; type block, val block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18, sender 0
 pre pre vote valid; moved to pre vote
@@ -904,8 +906,6 @@ received message 26; type block, val block 2: transaction 1, fee 0.22, transacti
 received message 31; type prevote, val 2, sender 4
 received message 27; type prevote, val 2, sender 0
 received message 28; type tx, val transaction 4, fee 0.26, sender 1
-preVotes: {2: {0, 1, 2, 3}}
-votes: {2: {2}}
 sent message 28; type tx, val transaction 4, fee 0.26, sender 1 to player 1
 sent message 26; type block, val block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18, sender 0 to player 1
 sent message 34; type prevote, val 2, sender 2 to player 1
@@ -922,13 +922,13 @@ sent message 27; type prevote, val 2, sender 0 to player 0
 sent message 35; type vote, val 2, sender 2 to player 0
 
 player 3
+preVotes: {2: {0, 1, 3}}
+votes: {}
 received message 30; type prevote, val 2, sender 3
 received message 31; type prevote, val 2, sender 4
 moved to vote stage
 received message 33; type vote, val 2, sender 1
 received message 32; type vote, val 2, sender 0
-preVotes: {2: {0, 1, 3, 4}}
-votes: {2: {0, 1, 3}}
 sent message 31; type prevote, val 2, sender 4 to player 0
 sent message 36; type vote, val 2, sender 3 to player 0
 sent message 33; type vote, val 2, sender 1 to player 0
@@ -939,13 +939,13 @@ sent message 33; type vote, val 2, sender 1 to player 2
 sent message 32; type vote, val 2, sender 0 to player 2
 
 player 4
+preVotes: {2: {0, 4}}
+votes: {}
 received message 29; type prevote, val 2, sender 1
 received message 30; type prevote, val 2, sender 3
 moved to vote stage
 received message 31; type prevote, val 2, sender 4
 received message 32; type vote, val 2, sender 0
-preVotes: {2: {0, 1, 3, 4}}
-votes: {2: {0, 4}}
 sent message 29; type prevote, val 2, sender 1 to player 0
 sent message 30; type prevote, val 2, sender 3 to player 0
 sent message 37; type vote, val 2, sender 4 to player 0
@@ -956,6 +956,8 @@ sent message 37; type vote, val 2, sender 4 to player 2
 sent message 32; type vote, val 2, sender 0 to player 2
 
 player 0
+preVotes: {2: {0, 1, 3, 4}}
+votes: {2: {0}}
 received message 30; type prevote, val 2, sender 3
 received message 31; type prevote, val 2, sender 4
 received message 33; type vote, val 2, sender 1
@@ -976,8 +978,6 @@ received message 29; type prevote, val 2, sender 1
 received message 30; type prevote, val 2, sender 3
 received message 37; type vote, val 2, sender 4
 received message 32; type vote, val 2, sender 0
-preVotes: {2: {0, 1, 3, 4}}
-votes: {2: {0, 1, 2, 3, 4}}
 sent message 33; type vote, val 2, sender 1 to player 1
 sent message 35; type vote, val 2, sender 2 to player 1
 sent message 36; type vote, val 2, sender 3 to player 1
@@ -988,6 +988,8 @@ sent message 36; type vote, val 2, sender 3 to player 4
 sent message 37; type vote, val 2, sender 4 to player 4
 
 player 1
+preVotes: {2: {0, 1, 3, 4}}
+votes: {2: {0, 1}}
 received message 28; type tx, val transaction 4, fee 0.26, sender 1
 received message 26; type block, val block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18, sender 0
 received message 34; type prevote, val 2, sender 2
@@ -1000,8 +1002,6 @@ received message 35; type vote, val 2, sender 2
 received message 36; type vote, val 2, sender 3
 committed block block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18
 received message 37; type vote, val 2, sender 4
-preVotes: {2: {0, 1, 3, 4}}
-votes: {2: {0, 1, 2, 3, 4}}
 sent message 35; type vote, val 2, sender 2 to player 3
 sent message 36; type vote, val 2, sender 3 to player 3
 sent message 37; type vote, val 2, sender 4 to player 3
@@ -1010,6 +1010,8 @@ sent message 36; type vote, val 2, sender 3 to player 0
 sent message 37; type vote, val 2, sender 4 to player 0
 
 player 2
+preVotes: {2: {0, 1, 2, 3}}
+votes: {2: {2}}
 received message 31; type prevote, val 2, sender 4
 received message 36; type vote, val 2, sender 3
 received message 33; type vote, val 2, sender 1
@@ -1019,8 +1021,6 @@ received message 29; type prevote, val 2, sender 1
 received message 30; type prevote, val 2, sender 3
 received message 37; type vote, val 2, sender 4
 received message 32; type vote, val 2, sender 0
-preVotes: {2: {0, 1, 2, 3}}
-votes: {2: {0, 1, 2, 3, 4}}
 sent message 36; type vote, val 2, sender 3 to player 1
 sent message 33; type vote, val 2, sender 1 to player 1
 sent message 32; type vote, val 2, sender 0 to player 1
@@ -1031,25 +1031,25 @@ sent message 32; type vote, val 2, sender 0 to player 0
 sent message 37; type vote, val 2, sender 4 to player 0
 
 player 3
+preVotes: {2: {0, 1, 3, 4}}
+votes: {2: {0, 1, 3}}
 received message 35; type vote, val 2, sender 2
 committed block block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18
 received message 36; type vote, val 2, sender 3
 received message 37; type vote, val 2, sender 4
-preVotes: {2: {0, 1, 3, 4}}
-votes: {2: {0, 1, 2, 3, 4}}
 sent message 35; type vote, val 2, sender 2 to player 0
 sent message 37; type vote, val 2, sender 4 to player 0
 sent message 35; type vote, val 2, sender 2 to player 2
 sent message 37; type vote, val 2, sender 4 to player 2
 
 player 4
+preVotes: {2: {0, 1, 3, 4}}
+votes: {2: {0, 4}}
 received message 33; type vote, val 2, sender 1
 received message 35; type vote, val 2, sender 2
 committed block block 2: transaction 1, fee 0.22, transaction 3, fee 0.27, transaction 2, fee 0.18
 received message 36; type vote, val 2, sender 3
 received message 37; type vote, val 2, sender 4
-preVotes: {2: {0, 1, 3, 4}}
-votes: {2: {0, 1, 2, 3, 4}}
 sent message 33; type vote, val 2, sender 1 to player 0
 sent message 35; type vote, val 2, sender 2 to player 0
 sent message 36; type vote, val 2, sender 3 to player 0
@@ -1058,6 +1058,8 @@ sent message 35; type vote, val 2, sender 2 to player 2
 sent message 36; type vote, val 2, sender 3 to player 2
 
 player 0
+preVotes: {2: {0, 1, 3, 4}}
+votes: {2: {0, 1, 2, 3, 4}}
 received message 35; type vote, val 2, sender 2
 received message 36; type vote, val 2, sender 3
 received message 37; type vote, val 2, sender 4
@@ -1070,25 +1072,23 @@ received message 37; type vote, val 2, sender 4
 received message 33; type vote, val 2, sender 1
 received message 35; type vote, val 2, sender 2
 received message 36; type vote, val 2, sender 3
-preVotes: {2: {0, 1, 3, 4}}
-votes: {2: {0, 1, 2, 3, 4}}
 
 player 1
+preVotes: {2: {0, 1, 3, 4}}
+votes: {2: {0, 1, 2, 3, 4}}
 received message 36; type vote, val 2, sender 3
 received message 33; type vote, val 2, sender 1
 received message 32; type vote, val 2, sender 0
 received message 37; type vote, val 2, sender 4
-preVotes: {2: {0, 1, 3, 4}}
-votes: {2: {0, 1, 2, 3, 4}}
 
 player 2
+preVotes: {2: {0, 1, 2, 3}}
+votes: {2: {0, 1, 2, 3, 4}}
 received message 35; type vote, val 2, sender 2
 received message 37; type vote, val 2, sender 4
 received message 33; type vote, val 2, sender 1
 received message 35; type vote, val 2, sender 2
 received message 36; type vote, val 2, sender 3
-preVotes: {2: {0, 1, 2, 3}}
-votes: {2: {0, 1, 2, 3, 4}}
 
 player 3
 preVotes: {2: {0, 1, 3, 4}}
